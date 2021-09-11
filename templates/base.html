@@ -41,8 +41,7 @@
             </li>
         </ul>
         <div class="navbar-text" id="weather">
-            <!-- {% block weather %}{% endblock %} -->
-            날씨: 맑음
+            {% block weather %}{% endblock %}
         </div>
     </nav>
 
@@ -99,13 +98,21 @@
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if menu.wc %}active{% endif %}" 
                            data-toggle="dropdown" href="#">워드 클라우드</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/wordcloud/text">텍스트 파일</a>
                             <a class="dropdown-item" href="/wordcloud/sports_news">스포츠 뉴스</a>
+                        </div>
+                    </li>
+                    <div class="dropdown-divider"></div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if menu.rs %}active{% endif %}" 
+                           data-toggle="dropdown" href="#">추천 시스템</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/recommendation/movie">영화</a>
+                            <a class="dropdown-item" href="/recommendation/book">책</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
