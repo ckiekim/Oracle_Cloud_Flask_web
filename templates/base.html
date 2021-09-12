@@ -26,7 +26,7 @@
                     <i class="fa fa-home"></i> Home
                 </a>
             </li>
-            <li class="nav-item mr-3">
+            <!-- <li class="nav-item mr-3">
                 <a class="nav-link {% if menu.da %}active{% endif %}" href="#">
                     <i class="fas fa-chart-line"></i> 데이터 분석
                 </a>
@@ -34,6 +34,22 @@
             <li class="nav-item mr-3">
                 <a class="nav-link {% if menu.ml %}active{% endif %}" href="#">
                     <i class="fas fa-brain"></i> 머신 러닝
+                </a>
+            </li> -->
+            <li class="nav-item mr-5">
+                <a class="nav-link {% if menu.bb %}active{% endif %}" 
+                   href="{% if menu.bb %}#{% else %}#/bbs{% endif %}">
+                    <i class="far fa-list-alt"></i> 자유게시판
+                </a>
+            </li>
+            <li class="nav-item mr-3">
+                <a class="nav-link {% if menu.li %}active{% endif %}" href="#/user/login">
+                    <i class="fas fa-sign-in-alt"></i> 로그인
+                </a>
+            </li>
+            <li class="nav-item mr-3">
+                <a class="nav-link {% if menu.rg %}active{% endif %}" href="#/user/register">
+                    <i class="fas fa-user-plus"></i> 회원가입
                 </a>
             </li>
             <li class="nav-item">
