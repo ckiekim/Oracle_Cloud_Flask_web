@@ -145,6 +145,7 @@ def cctv(option):
         f1 = np.poly1d(fp1)
         fy = f1(fx)
 
+        plt.rc('font', family='NanumBarunGothic')
         plt.figure(figsize=(12,8))
         plt.scatter(df['인구수'], df['소계'], c=df['오차'], s=50)
         plt.plot(fx, fy, ls='dashed', lw=3, color='g')
