@@ -13,6 +13,9 @@ seoul_bp = Blueprint('seoul_bp', __name__)
 menu = {'ho':0, 'da':1, 'ml':0, 
         'se':1, 'cg':0, 'cr':0, 'wc':0, 'rs':0,
         'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
+# 한글 폰트
+mpl.rcParams['axes.unicode_minus'] = False
+plt.rc('font', family='NanumGothic') 
 
 @seoul_bp.route('/park', methods=['GET', 'POST'])
 def park():
@@ -142,7 +145,6 @@ def cctv(option):
         f1 = np.poly1d(fp1)
         fy = f1(fx)
 
-        logging.debug('before plt')
         plt.figure(figsize=(12,8))
         plt.scatter(df['인구수'], df['소계'], c=df['오차'], s=50)
         plt.plot(fx, fy, ls='dashed', lw=3, color='g')
