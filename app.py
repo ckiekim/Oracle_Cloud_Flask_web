@@ -3,11 +3,13 @@ from my_util.weather import get_weather
 from logging.config import dictConfig
 import json, logging
 from bp1_seoul.seoul import seoul_bp
+from bp2_cartogram.carto import carto_bp
 
 app = Flask(__name__)
 app.register_blueprint(seoul_bp, url_prefix='/seoul')
+app.register_blueprint(carto_bp, url_prefix='/cartogram')
 
-with open('./logging.json', 'r') as file:
+with open('./log/logging.json', 'r') as file:
     config = json.load(file)
 dictConfig(config)
 
