@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}CK 빅데이터{% endblock %}</title>
+    <title>{% block title %}CK World{% endblock %}</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.ico')}}">
@@ -51,30 +51,12 @@
                 <ul class="nav flex-column nav-pills">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if menu.se %}active{% endif %}" 
-                           data-toggle="dropdown" href="#">서울특별시</a>
+                           data-toggle="dropdown" href="#">지역분석(서울)</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/seoul/park">공원 현황</a>
                             <a class="dropdown-item" href="/seoul/park_gu/area">공원 비교</a>
                             <a class="dropdown-item" href="/seoul/crime/crime">범죄</a>
                             <a class="dropdown-item" href="/seoul/cctv/graph">CCTV</a>
-                        </div>
-                    </li>
-                    <div class="dropdown-divider"></div>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if menu.co %}active{% endif %}" 
-                           data-toggle="dropdown" href="#">코로나-19</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/covid/region">지역별</a>
-                            <a class="dropdown-item" href="/covid/region_seq">지역별 추이</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/covid/agender">연령별/성별</a>
-                            <a class="dropdown-item" href="/covid/age_seq">연령별 추이</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item disabled" href="#">서울시 구별</a>
-                            <a class="dropdown-item ml-2" href="/covid/seoul_seq">- 추이</a>
-                            <a class="dropdown-item ml-2" href="/covid/seoul_comp">- 비교</a>
-                            <a class="dropdown-item ml-2" href="/covid/seoul_map/ratio">- 지도</a>
-                            <a class="dropdown-item ml-2" href="/covid/seoul_db_update">- DB 갱신</a>
                         </div>
                     </li>
                     <div class="dropdown-divider"></div>
