@@ -14,7 +14,7 @@ menu = {'ho':0, 'da':1, 'ml':0,
 @crawl_bp.route('/food', methods=['GET', 'POST'])
 def food():
     if request.method == 'GET':
-        place = request.args.get('place', '성복역')
+        place = request.args.get('place', '강남역')
         rest_list = cu.siksin(place)
         return render_template('crawling/food.html', menu=menu, weather=get_weather(),
                                 rest_list=rest_list, place=place)
