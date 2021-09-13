@@ -40,6 +40,7 @@ sql = '''
         modTime DATETIME DEFAULT CURRENT_TIMESTAMP,
         viewCount INT DEFAULT 0,
         replyCount INT DEFAULT 0,
+        isDeleted INT DEFAULT 0,
         FOREIGN KEY(uid) REFERENCES users(uid)
     ) AUTO_INCREMENT=1001;
 '''

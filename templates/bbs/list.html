@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block additional_head %}
+    <style>
+        th, td {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block weather %} {{ weather|safe() }} {% endblock %}
+{% block subtitle %}
+    <strong>게시판 글 목록</strong>
+    <small><a href="/bbs/write" class="ml-5"><i class="far fa-file-alt"></i> 글쓰기</a></small>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-condensed table-hover" style="margin-bottom: 80px;">
+                <tr class="table-secondary d-flex">
+                    <th class="col-1" style="text-align: center;">번호</th>
+                    <th class="col-6" style="text-align: center;">제목</th>
+                    <th class="col-2" style="text-align: center;">글쓴이</th>
+                    <th class="col-2" style="text-align: center;">날짜/시간</th>
+                    <th class="col-1" style="text-align: center;">조회수</th>
+                </tr>
+                {% for row in bbs_list %}
+                    <tr class="d-flex">
+                        <td class="col-1">{{row[0]}}</td>
+                        <td class="col-6"><a href="/bbs/view/{{row[0]}}"><strong>{{row[3]}}
+                            {% if row[7] %}<span class="text-danger">[{{row[7]}}]</span>{% endif %}</strong></a></td>
+                        <td class="col-2">{{row[2]}}</td>
+                        <td class="col-2">{% if today==row[5][:10] %}{{row[5][11:]}}{% else %}{{row[5][:10]}}{% endif %}</td>
+                        <td class="col-1">{{row[6]}}</td>
+                    </tr>
+                {% endfor %}
+            </table>            
+        </div>
+    </div>
+{% endblock %}
