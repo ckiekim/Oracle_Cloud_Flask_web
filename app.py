@@ -8,7 +8,7 @@ from bp3_crawling.crawl import crawl_bp
 from bpz_user.user import user_bp
 
 app = Flask(__name__)
-app.secret_key = 'qwert12345'
+app.secret_key = 'qwert12345'   # session, flash 사용하기 위해 설정
 app.register_blueprint(seoul_bp, url_prefix='/seoul')
 app.register_blueprint(carto_bp, url_prefix='/cartogram')
 app.register_blueprint(crawl_bp, url_prefix='/crawling')

@@ -1,7 +1,8 @@
 ## Web-for-DataAnalysis & AI-Application
+- http://168.138.102.210:5000
 
 ### Application(진행중)
-- 지역 분석
+- 지역 분석, 카토그램, 크롤링
 - 추천 시스템: 책, 영화
 - 머신러닝: 분류, 회귀, PCA, 군집화
 - 딥러닝: 이미지 분류, 응용
