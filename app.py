@@ -5,11 +5,14 @@ import json, logging
 from bp1_seoul.seoul import seoul_bp
 from bp2_cartogram.carto import carto_bp
 from bp3_crawling.crawl import crawl_bp
+from bpz_user.user import user_bp
 
 app = Flask(__name__)
+app.secret_key = 'qwert12345'
 app.register_blueprint(seoul_bp, url_prefix='/seoul')
 app.register_blueprint(carto_bp, url_prefix='/cartogram')
 app.register_blueprint(crawl_bp, url_prefix='/crawling')
+app.register_blueprint(user_bp, url_prefix='/user')
 
 with open('./log/logging.json', 'r') as file:
     config = json.load(file)
