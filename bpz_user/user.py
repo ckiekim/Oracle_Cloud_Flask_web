@@ -9,7 +9,7 @@ user_bp = Blueprint('user_bp', __name__)
 
 @user_bp.route('/register', methods=['GET', 'POST'])
 def register():
-    menu = {'ho':0, 'li':0, 'rg':1, 
+    menu = {'ho':0, 'bb':0, 'li':0, 'rg':1, 
             'se':0, 'cg':0, 'cr':0, 'wc':0, 'rs':0,
             'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
     if request.method == 'GET':
@@ -34,7 +34,7 @@ def register():
 
 @user_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    menu = {'ho':0, 'li':1, 'rg':0, 
+    menu = {'ho':0, 'bb':0, 'li':1, 'rg':0, 
             'se':0, 'cg':0, 'cr':0, 'wc':0, 'rs':0,
             'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
     if request.method == 'GET':
