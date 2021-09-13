@@ -9,6 +9,8 @@ from bpz_user.user import user_bp
 
 app = Flask(__name__)
 app.secret_key = 'qwert12345'   # session, flash 사용하기 위해 설정
+app.config['SESSION_COOKIE_PATH'] = '/'
+
 app.register_blueprint(seoul_bp, url_prefix='/seoul')
 app.register_blueprint(carto_bp, url_prefix='/cartogram')
 app.register_blueprint(crawl_bp, url_prefix='/crawling')
@@ -25,6 +27,15 @@ def index():
             'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
     client_addr = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
     logging.debug(f'Connected to {client_addr}')
+    try:
+        logging.debug(f"uid:{session['uid']}, uname:{session['uname']}")
+    except:
+        session['uid'], session['uname'] = None, None
+    ''' try:
+        sess_uid, sess_uname = session['uid'], session['uname']
+    except:
+        sess_uid, sess_uname = None, None
+    logging.debug(f"uid:{sess_uid}, uname:{sess_uname}") '''
     return render_template('index.html', menu=menu, weather=get_weather())
 
 if __name__ == '__main__':

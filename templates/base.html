@@ -49,16 +49,29 @@
                     <i class="far fa-list-alt"></i> 자유게시판
                 </a>
             </li>
-            <li class="nav-item mr-3">
-                <a class="nav-link {% if menu.li %}active{% endif %}" href="#/user/login">
-                    <i class="fas fa-sign-in-alt"></i> 로그인
-                </a>
-            </li>
-            <li class="nav-item mr-3">
-                <a class="nav-link {% if menu.rg %}active{% endif %}" href="/user/register">
-                    <i class="fas fa-user-plus"></i> 회원가입
-                </a>
-            </li>
+            {% if session['uid'] %}
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="/user/logout">
+                        <i class="fas fa-sign-out-alt"></i> 로그아웃
+                    </a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a class="nav-link disabled" href="#">
+                        {{session['uname']}}님 환영합니다.
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item mr-3">
+                    <a class="nav-link {% if menu.li %}active{% endif %}" href="/user/login">
+                        <i class="fas fa-sign-in-alt"></i> 로그인
+                    </a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a class="nav-link {% if menu.rg %}active{% endif %}" href="/user/register">
+                        <i class="fas fa-user-plus"></i> 회원가입
+                    </a>
+                </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
             </li>
