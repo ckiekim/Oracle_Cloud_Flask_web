@@ -51,3 +51,11 @@ def get_bbs_counts():
     conn.close()
     return result[0]
 
+def insert_bbs(params):
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = "INSERT INTO bbs(uid, title, content) VALUES(%s, %s, %s);"
+    cur.execute(sql, params)
+    conn.commit()
+    cur.close()
+    conn.close()

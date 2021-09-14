@@ -32,7 +32,28 @@
                         <td class="col-1">{{row[6]}}</td>
                     </tr>
                 {% endfor %}
-            </table>            
+            </table>
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link active" href="{% if page_no>10 %}/bbs/list/{{((page_no-1)/10 | round)*10}}{% else %}#{% endif %}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span></a>
+                </li>
+                {% for page in range(start_page, end_page+1) %}
+                    {% if page==page_no %}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">
+                                {{page}}<span class="sr-only">(current)</span>
+                            </span>
+                        </li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="/bbs/list/{{page}}">{{page}}</a></li>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item">
+                    <a class="page-link" href="{% if end_page<total_page %}/bbs/list/{{((page_no/10+0.9)|round)*10+1}}{% else %}#{% endif %}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span></a>
+                </li>
+            </ul>         
         </div>
     </div>
 {% endblock %}
