@@ -51,6 +51,47 @@ def get_bbs_counts():
     conn.close()
     return result[0]
 
+def get_bbs_data(bid):
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = '''SELECT b.bid, b.uid, u.uname, b.title, b.content, 
+                    DATE_FORMAT(b.modTime, '%%Y-%%m-%%d %%H:%%i:%%s') AS modTime,
+                    b.viewCount, b.replyCount
+                FROM bbs AS b
+                JOIN users AS u
+                ON b.uid=u.uid
+                WHERE b.isDeleted=0 and b.bid=%s'''
+    cur.execute(sql, (bid,))
+    row = cur.fetchone()
+    cur.close()
+    conn.close()
+    return row
+
+def get_replies(bid):
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = '''SELECT r.rid, r.bid, r.uid, u.uname, r.content,
+                    DATE_FORMAT(r.regTime, '%%Y-%%m-%%d %%H:%%i:%%s') AS regTime,
+                    r.isMine
+                FROM reply AS r
+                JOIN users AS u
+                ON r.uid=u.uid
+                WHERE r.bid=%s;'''
+    cur.execute(sql, (bid,))
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return rows
+
+def increase_view_count(bid):
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = "UPDATE bbs SET viewCount=viewCount+1 WHERE bid=%s;"
+    cur.execute(sql, (bid,))
+    conn.commit()
+    cur.close()
+    conn.close()
+
 def insert_bbs(params):
     conn = pymysql.connect(**config)
     cur = conn.cursor()

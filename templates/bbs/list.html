@@ -9,7 +9,9 @@
 {% block weather %} {{ weather|safe() }} {% endblock %}
 {% block subtitle %}
     <strong>게시판 글 목록</strong>
-    <small><a href="/bbs/write" class="ml-5"><i class="far fa-file-alt"></i> 글쓰기</a></small>
+    <span style="font-size: 0.6em;">
+        <a href="/bbs/write" class="ml-5"><i class="far fa-file-alt"></i> 글쓰기</a>
+    </span>
 {% endblock %}
 {% block content %}
     <div class="row">

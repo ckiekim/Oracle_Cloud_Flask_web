@@ -73,16 +73,17 @@ cur.execute(sql)
 
 # 샘플 reply
 replies = [
-    (1001, 'maria', '저도 궁금합니다.'),
-    (1002, 'james', '저도 동감입니다.')
+    (1001, 'maria', '저도 궁금합니다.', 0),
+    (1002, 'james', '저도 동감입니다.', 0),
+    (1001, 'james', 'email로 문의해 주시면 친절하게 안내해 드릴게요.', 1)
 ]
-sql = 'INSERT INTO reply(bid, uid, content) VALUES(%s,%s,%s);'
+sql = 'INSERT INTO reply(bid,uid,content,isMine) VALUES(%s,%s,%s,%s);'
 for params in replies:
     cur.execute(sql, params)
 conn.commit()
 
 # Reply에 대하여 bbs 조회수 변경
-bbs_reply = [(1,1,1001), (1,1,1002)]
+bbs_reply = [(1,2,1001), (1,1,1002)]
 sql = 'update bbs set viewCount=%s, replyCount=%s where bid=%s;'
 for params in bbs_reply:
     cur.execute(sql, params)
