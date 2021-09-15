@@ -47,7 +47,7 @@ def reply():
     uid = request.form['uid']
     content = request.form['content']
     isMine = 1 if session['uid'] == uid else 0
-    dm.insert_reply((bid, uid, content, isMine))
+    dm.insert_reply((bid, session['uid'], content, isMine))
     dm.increase_reply_count(bid)
     page = session['current_page']
     return redirect(url_for('bbs_bp.list', page=page))
