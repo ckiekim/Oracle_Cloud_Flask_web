@@ -49,8 +49,7 @@ def reply():
     isMine = 1 if session['uid'] == uid else 0
     dm.insert_reply((bid, session['uid'], content, isMine))
     dm.increase_reply_count(bid)
-    page = session['current_page']
-    return redirect(url_for('bbs_bp.list', page=page))
+    return redirect(url_for('bbs_bp.list', page=session['current_page']))
 
 @bbs_bp.route('/write', methods=['GET', 'POST'])
 def write():
@@ -78,3 +77,17 @@ def update(uid, bid):
         content = request.form['content']
         dm.update_bbs((title, content, bid))
         return redirect(url_for('bbs_bp.view', bid=bid))
+
+@bbs_bp.route('/delete/<uid>/bid/<int:bid>', methods=['GET'])
+def delete(uid, bid):
+    if session['uid'] == uid:
+        return render_template('bbs/delete.html', menu=menu, weather=get_weather(),
+                                bid=bid, page=session['current_page'])
+    else:
+        flash('삭제 권한이 없습니다.')
+        return redirect(url_for('bbs_bp.view', bid=bid))
+
+@bbs_bp.route('/deleteConfirm/<int:bid>', methods=['GET'])
+def deleteConfirm(bid):
+    dm.delete_bbs(bid)
+    return redirect(url_for('bbs_bp.list', page=session['current_page']))
