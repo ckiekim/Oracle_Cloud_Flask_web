@@ -55,6 +55,12 @@ def reply():
 @bbs_bp.route('/write', methods=['GET', 'POST'])
 def write():
     if request.method == 'GET':
-        pass
+        return render_template('bbs/write.html', menu=menu, weather=get_weather())
     else:
-        pass
+        title = request.form['title']
+        content = request.form['content']
+        uid = session['uid']
+        dm.insert_bbs((uid, title, content))
+        return redirect(url_for('bbs_bp.list', page=1))
+
+

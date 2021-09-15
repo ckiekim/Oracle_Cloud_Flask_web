@@ -28,8 +28,11 @@
         <div class="col-12"><hr></div>
         <div class="col-12">
             {% autoescape false %}
-                <p>{{row[4] | replace('\n', '<br>')}}</p>       <!-- content -->
+                {{row[4]}}       <!-- content -->
             {% endautoescape %}
+            <!-- {% autoescape false %}
+                <p>{{row[4] | replace('\n', '<br>')}}</p>
+            {% endautoescape %} -->
         </div>
 
         <div class="col-12"><hr></div>
