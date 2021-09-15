@@ -118,3 +118,21 @@ def insert_bbs(params):
     conn.commit()
     cur.close()
     conn.close()
+
+def update_bbs(params):
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = "UPDATE bbs SET title=%s, content=%s, modTime=NOW() WHERE bid=%s;"
+    cur.execute(sql, params)
+    conn.commit()
+    cur.close()
+    conn.close()
+
+def delete_bbs(bid):
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = "UPDATE bbs SET isDeleted=1, modTime=NOW() WHERE bid=%s;"
+    cur.execute(sql, (bid,))
+    conn.commit()
+    cur.close()
+    conn.close()

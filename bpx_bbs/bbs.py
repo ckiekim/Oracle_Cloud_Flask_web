@@ -60,8 +60,21 @@ def write():
     else:
         title = request.form['title']
         content = request.form['content']
-        uid = session['uid']
-        dm.insert_bbs((uid, title, content))
+        dm.insert_bbs((session['uid'], title, content))
         return redirect(url_for('bbs_bp.list', page=1))
 
-
+@bbs_bp.route('/update/<uid>/bid/<int:bid>', methods=['GET', 'POST'])
+def update(uid, bid):
+    if request.method == 'GET':
+        if session['uid'] == uid:
+            row = dm.get_bbs_data(bid)
+            return render_template('bbs/update.html', menu=menu, weather=get_weather(),
+                                    row=row, page=session['current_page'])
+        else:
+            flash('수정 권한이 없습니다.')
+            return redirect(url_for('bbs_bp.view', bid=bid))
+    else:
+        title = request.form['title']
+        content = request.form['content']
+        dm.update_bbs((title, content, bid))
+        return redirect(url_for('bbs_bp.view', bid=bid))
