@@ -55,7 +55,8 @@ def reply():
 @bbs_bp.route('/write', methods=['GET', 'POST'])
 def write():
     if request.method == 'GET':
-        return render_template('bbs/write.html', menu=menu, weather=get_weather())
+        return render_template('bbs/write.html', menu=menu, weather=get_weather(),
+                                page=session['current_page'])
     else:
         title = request.form['title']
         content = request.form['content']

@@ -5,6 +5,9 @@
 {% block weather %} {{ weather|safe() }} {% endblock %}
 {% block subtitle %}
     <strong>글 쓰기</strong>
+    <span style="font-size: 0.6em;">
+        <a href="/bbs/list/{{page}}" class="ml-5""><i class="fas fa-list-ul"></i> 목록</a>
+    </span>
 {% endblock %}
 {% block content %}
     <div class="row">
