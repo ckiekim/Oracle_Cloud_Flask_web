@@ -92,6 +92,24 @@ def increase_view_count(bid):
     cur.close()
     conn.close()
 
+def insert_reply(params):
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = 'INSERT INTO reply(bid,uid,content,isMine) VALUES(%s,%s,%s,%s);'
+    cur.execute(sql, params)
+    conn.commit()
+    cur.close()
+    conn.close()
+
+def increase_reply_count(bid):
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = "UPDATE bbs SET replyCount=replyCount+1 WHERE bid=%s;"
+    cur.execute(sql, (bid,))
+    conn.commit()
+    cur.close()
+    conn.close()
+
 def insert_bbs(params):
     conn = pymysql.connect(**config)
     cur = conn.cursor()

@@ -14,7 +14,7 @@ menu = {'ho':0, 'bb':1, 'li':0, 'rg':0,
 def list(page):
     if not session['uid']:
         flash('게시판을 이용하려면 로그인을 하세요.')
-        return redirect('/')
+        return redirect('/user/login')
 
     session['current_page'] = page
     offset = (page - 1) * 10
@@ -40,6 +40,17 @@ def view(bid):
     return render_template('bbs/view.html', menu=menu, weather=get_weather(),
                             inc=inc, row=row, replies=rows,
                             page=session['current_page'])
+
+@bbs_bp.route('/reply', methods=['POST'])
+def reply():
+    bid = request.form['bid']
+    uid = request.form['uid']
+    content = request.form['content']
+    isMine = 1 if session['uid'] == uid else 0
+    dm.insert_reply((bid, uid, content, isMine))
+    dm.increase_reply_count(bid)
+    page = session['current_page']
+    return redirect(url_for('bbs_bp.list', page=page))
 
 @bbs_bp.route('/write', methods=['GET', 'POST'])
 def write():
