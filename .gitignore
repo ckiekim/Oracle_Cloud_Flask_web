@@ -22,6 +22,8 @@ naver/
 voice/
 keys/
 mysql.json
+movies/
+movie_cos_sim.pkl
 
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
