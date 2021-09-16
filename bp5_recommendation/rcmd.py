@@ -18,10 +18,25 @@ def movie():
     else:
         mr.get_cosine_sim()
         df = pd.read_csv('static/data/movies_meta_summary.csv')
-        df = df.head(10034).dropna().drop_duplicates()
-        df.reset_index(inplace=True)
-        df.drop(['index'], axis=1, inplace=True)
         
         movie_dict = dict(zip(df.title, df.index))
         return render_template('rcmd/movie.html', menu=menu, weather=get_weather(),
                                 movie_dict=movie_dict)
+
+@rcmd_bp.route('/movie_res', methods=['POST'])
+def movie_res():
+    kind = request.form['kind']
+    if kind == 'list':
+        index = int(request.form['list'])
+    elif kind == 'index':
+        index = int(request.form['index'])
+    else:
+        title = request.form['title']
+        index = mr.get_movie_index(title)
+        if index < 0:
+            flash('입력한 영화제목 데이터가 없습니다.')
+            return redirect(url_for('rcmd_bp.movie'))
+
+    movie_list, title = mr.get_recommendations(index)
+    return render_template('rcmd/movie_res.html', menu=menu, weather=get_weather(),
+                            movie_list=movie_list, title=title)
