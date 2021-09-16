@@ -35,3 +35,23 @@ def get_movie_index(title):
     except:
         index = -1
     return index
+
+def get_recommended_books(index):
+    df = pd.read_csv('static/data/books2.csv')
+    tvect = TfidfVectorizer(stop_words='english')
+    tfidf_matrix = tvect.fit_transform(df.cleaned)
+    book_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+
+    sim_scores = list(enumerate(book_sim[index]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    sim_scores = sim_scores[:6]
+    book_indices = [i[0] for i in sim_scores]
+    return book_indices
+
+def get_book_index(title):
+    df = pd.read_csv('static/data/books2.csv')
+    title_len = len(title)
+    for i in df.index:
+        if title.lower() == df.title[i].lower()[:title_len]:
+            return i
+    return -1

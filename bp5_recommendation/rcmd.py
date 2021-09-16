@@ -40,3 +40,30 @@ def movie_res():
     movie_list, title = mr.get_recommendations(index)
     return render_template('rcmd/movie_res.html', menu=menu, weather=get_weather(),
                             movie_list=movie_list, title=title)
+
+@rcmd_bp.route('/book', methods=['GET', 'POST'])
+def book():
+    df = pd.read_csv('static/data/books2.csv')
+    if request.method == 'GET':
+        book_dict = dict(zip(df.title, df.index))
+        return render_template('rcmd/book.html', menu=menu, weather=get_weather(),
+                                book_dict=book_dict)
+    else:
+        kind = request.form['kind']
+        if kind == 'list':
+            index = int(request.form['list'])
+        elif kind == 'index':
+            index = int(request.form['index'])
+        else:
+            title = request.form['title']
+            index = mr.get_book_index(title)
+            if index < 0:
+                flash('입력한 도서제목 데이터가 없습니다.')
+                return redirect(url_for('rcmd_bp.book'))
+    
+    book_indices = mr.get_recommended_books(index)
+    book_list = []
+    for i in book_indices:
+        book_list.append([df.image_link[i], df.title[i], df.author[i], df.genre[i]])
+    return render_template('rcmd/book_res.html', menu=menu, weather=get_weather(),
+                            book_list=book_list)
