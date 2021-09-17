@@ -44,6 +44,7 @@ if len(sys.argv) == 1 or sys.argv[1] == '100':
 else:
     results = []
     for page in range(1,11):
+        print(i, 'page')
         url = 'https://youtube-rank.com/board/bbs/board.php?bo_table=youtube&page='+str(page)
         driver.get(url)
         time.sleep(3)
@@ -59,7 +60,7 @@ else:
             video = convert_unit(channel.select_one('.video_cnt').text)
             results.append([category,name,subscriber,view,video])
 
-    df = pd.DataFrame(channels, columns=['카테고리','채널명','구독자수','조회수','비디오수'])
+    df = pd.DataFrame(results, columns=['카테고리','채널명','구독자수','조회수','비디오수'])
     df.to_csv('youtube_rank_top_1000.tsv', sep='\t', index=False)
 
 driver.close()
