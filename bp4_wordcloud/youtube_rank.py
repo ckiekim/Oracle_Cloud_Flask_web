@@ -37,6 +37,6 @@ for channel in channel_list:
     channels.append([category,name,subscriber,view,video])
 
 df = pd.DataFrame(channels, columns=['카테고리','채널명','구독자수','조회수','비디오수'])
-df.to_tsv('youtube rank top 100.tsv', sep='\t', index=False)
+df.to_csv('youtube rank top 100.tsv', sep='\t', index=False)
 
 driver.close()
