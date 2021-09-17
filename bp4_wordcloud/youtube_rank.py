@@ -44,7 +44,7 @@ if len(sys.argv) == 1 or sys.argv[1] == '100':
 else:
     results = []
     for page in range(1,11):
-        print(i, 'page')
+        print(page, 'page')
         url = 'https://youtube-rank.com/board/bbs/board.php?bo_table=youtube&page='+str(page)
         driver.get(url)
         time.sleep(3)
