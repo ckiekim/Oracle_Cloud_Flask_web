@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, session, g
 from flask import current_app, redirect
 from sklearn.datasets import load_digits
-#from konlpy.tag import Okt
+from konlpy.tag import Okt
 #from tensorflow.keras.applications.resnet50 import ResNet50, decode_predictions
 from PIL import Image, ImageDraw, ImageFont
 import os, re, joblib
