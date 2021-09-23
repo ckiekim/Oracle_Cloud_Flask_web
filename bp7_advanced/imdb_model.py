@@ -21,7 +21,7 @@ print(X_train.shape, X_test.shape)
 
 df_test = pd.DataFrame(X_test, columns=['review'])
 df_test['sentiment'] = y_test
-df_test.to_csv('../static/data/IMDB_test.csv', index=False)
+# df_test.to_csv('../static/data/IMDB_test.csv', index=False)
 
 # Case 1. CountVectorizer + LogisticRegression
 pipeline = Pipeline([
