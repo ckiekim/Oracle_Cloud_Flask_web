@@ -23,14 +23,14 @@ def before_app_first_request():
     #global imdb_count_lr, imdb_tfidf_lr
     #global naver_count_lr, naver_count_nb, naver_tfidf_lr, naver_tfidf_nb
     #global news_count_lr, news_tfidf_lr, news_tfidf_sv
-    #print('============ Advanced Blueprint before_app_first_request() ==========') '''
-    ''' imdb_count_lr = joblib.load('static/model/imdb_count_lr.pkl')
-    imdb_tfidf_lr = joblib.load('static/model/imdb_tfidf_lr.pkl') '''
-    ''' naver_count_lr = joblib.load('static/model/naver_count_lr.pkl')
+    #print('============ Advanced Blueprint before_app_first_request() ==========') 
+    imdb_count_lr = joblib.load('static/model/imdb_count_lr.pkl')
+    imdb_tfidf_lr = joblib.load('static/model/imdb_tfidf_lr.pkl')
+    naver_count_lr = joblib.load('static/model/naver_count_lr.pkl')
     naver_count_nb = joblib.load('static/model/naver_count_nb.pkl')
     naver_tfidf_lr = joblib.load('static/model/naver_tfidf_lr.pkl')
-    naver_tfidf_nb = joblib.load('static/model/naver_tfidf_nb.pkl') '''
-    ''' news_count_lr = joblib.load('static/model/news_count_lr.pkl')
+    naver_tfidf_nb = joblib.load('static/model/naver_tfidf_nb.pkl')
+    news_count_lr = joblib.load('static/model/news_count_lr.pkl')
     news_tfidf_lr = joblib.load('static/model/news_tfidf_lr.pkl')
     news_tfidf_sv = joblib.load('static/model/news_tfidf_sv.pkl') '''
 
