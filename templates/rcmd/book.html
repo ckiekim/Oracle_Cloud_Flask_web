@@ -14,7 +14,7 @@
                         <td class="col-1">
                             <div class="form-check-inline">
                                 <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" id="kind" name="kind" value="list" checked>
+                                    <input type="radio" class="form-check-input" id="kind1" name="kind" value="list" checked>
                                 </label>
                             </div>
                         </td>
@@ -31,7 +31,7 @@
                         <td class="col-1">
                             <div class="form-check-inline">
                                 <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" id="kind" name="kind" value="index">
+                                    <input type="radio" class="form-check-input" id="kind2" name="kind" value="index">
                                 </label>
                             </div>
                         </td>
@@ -44,7 +44,7 @@
                         <td class="col-1">
                             <div class="form-check-inline">
                                 <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" id="kind" name="kind" value="direct">
+                                    <input type="radio" class="form-check-input" id="kind3" name="kind" value="direct">
                                 </label>
                             </div>
                         </td>
@@ -63,4 +63,17 @@
         </div>
         <div class="col-1"></div>                    
     </div>
+{% endblock %}
+{% block additional_body %}
+    <script>
+        $('#list').on('input', () => {
+            $('#kind1')[0].checked = true
+        });
+        $('#index').on('input', () => {
+            $('#kind2')[0].checked = true
+        });
+        $('#title').on('input', () => {
+            $('#kind3')[0].checked = true
+        });
+    </script>
 {% endblock %}
