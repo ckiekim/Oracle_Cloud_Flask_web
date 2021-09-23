@@ -6,6 +6,7 @@ from sklearn.datasets import load_digits
 from PIL import Image, ImageDraw, ImageFont
 import os, re, joblib
 import urllib3, json, base64
+import logging
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -84,6 +85,9 @@ def mnist():
 
         scaler = joblib.load('static/model/mnist_scaler.pkl')
         test_data = df.iloc[index:index+3, :-1].values
+        logging.debug(f'{index}, {test_data.shape}')
+        test_data = df.values[index:index+3, :-1]
+        logging.debug(f'{test_data.shape}')
         test_scaled = scaler.transform(test_data)
         label_list = df.iloc[index:index+3, -1]
         svc = joblib.load('static/model/mnist_sv.pkl')
