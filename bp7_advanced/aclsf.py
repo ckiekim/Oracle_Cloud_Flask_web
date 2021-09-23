@@ -84,10 +84,7 @@ def mnist():
         df = pd.read_csv('static/data/mnist/mnist_test.csv')
 
         scaler = joblib.load('static/model/mnist_scaler.pkl')
-        test_data = df.iloc[index:index+3, :-1].values
-        logging.debug(f'{index}, {test_data.shape}')
-        test_data = df.values[index:index+3, :-1]
-        logging.debug(f'{test_data.shape}')
+        test_data = df.iloc[index:index+3, 1:-1].values
         test_scaled = scaler.transform(test_data)
         label_list = df.iloc[index:index+3, -1]
         svc = joblib.load('static/model/mnist_sv.pkl')
