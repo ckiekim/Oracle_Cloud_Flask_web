@@ -25,6 +25,12 @@ df_test['sentiment'] = y_test
 
 # Case 1. CountVectorizer + LogisticRegression
 pipeline = Pipeline([
+    ('count_vect', CountVectorizer(stop_words='english', max_df=500, ngram_range=(1,2))),
+    ('lr_clf', LogisticRegression(C=1))
+])
+pipeline.fit(X_train.review, y_train)
+joblib.dump(pipeline, '../static/model/imdb_count_lr.pkl')
+''' pipeline = Pipeline([
     ('count_vect', CountVectorizer(stop_words='english', ngram_range=(1,2))),
     ('lr_clf', LogisticRegression())
 ])
@@ -37,10 +43,16 @@ grid_pipe = GridSearchCV(pipeline, param_grid=params, cv=3,
 grid_pipe.fit(X_train.review, y_train)
 print(grid_pipe.best_params_, grid_pipe.best_score_)
 best_count_lr = grid_pipe.best_estimator_
-joblib.dump(best_count_lr, '../static/model/imdb_count_lr.pkl')
+joblib.dump(best_count_lr, '../static/model/imdb_count_lr.pkl') '''
 
 # Case 2. TfidfVectorizer + SupportVectorMachine
 pipeline = Pipeline([
+    ('tfidf_vect', TfidfVectorizer(stop_words='english', max_df=500, ngram_range=(1,2))),
+    ('lr_clf', LogisticRegression(C=10))
+])
+pipeline.fit(X_train.review, y_train)
+joblib.dump(pipeline, '../static/model/imdb_tfidf_lr.pkl')
+''' pipeline = Pipeline([
     ('tfidf_vect', TfidfVectorizer(stop_words='english', ngram_range=(1,2))),
     ('lr_clf', LogisticRegression())
 ])
@@ -53,4 +65,4 @@ grid_pipe = GridSearchCV(pipeline, param_grid=params, cv=3,
 grid_pipe.fit(X_train.review, y_train)
 print(grid_pipe.best_params_, grid_pipe.best_score_)
 best_tfidf_lr = grid_pipe.best_estimator_
-joblib.dump(best_tfidf_lr, '../static/model/imdb_tfidf_lr.pkl')
+joblib.dump(best_tfidf_lr, '../static/model/imdb_tfidf_lr.pkl') '''
