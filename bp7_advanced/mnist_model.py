@@ -23,7 +23,10 @@ scaler.fit(X_train)
 X_train_scaled = scaler.transform(X_train)
 joblib.dump(scaler, '../static/model/mnist_scaler.pkl')
 
-sv_clf = SVC()
+sv_clf = SVC(C=10)
+sv_clf.fit(X_train_scaled, y_train)
+joblib.dump(sv_clf, '../static/model/mnist_sv.pkl')
+''' sv_clf = SVC()
 params = {
     #'C': [0.1, 1, 10]
     'C': [5, 10, 20]
@@ -33,4 +36,4 @@ grid_cv.fit(X_train_scaled, y_train)
 print(f'최고 평균 정확도: {grid_cv.best_score_:.4f}')
 print('최적 파라미터:', grid_cv.best_params_)
 best_sv = grid_cv.best_estimator_
-joblib.dump(best_sv, '../static/model/mnist_sv.pkl')
+joblib.dump(best_sv, '../static/model/mnist_sv.pkl') '''
