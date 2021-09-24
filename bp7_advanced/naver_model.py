@@ -1,5 +1,4 @@
 # 네이버 영화 리뷰 감성 분석
-import re
 import joblib
 import numpy as np 
 import pandas as pd 
@@ -64,12 +63,12 @@ pipeline = Pipeline([
 ])
 pipeline.fit(X_train, y_train)
 joblib.dump(pipeline, '../static/model/naver_count_nb.pkl')
-print('Case 1. CountVectorizer + NaiveBayes done.')
+print('Case 2. CountVectorizer + NaiveBayes done.')
 
 # Case 3. TfidfVectorizer + LogisticRegression
 pipeline = Pipeline([
     ('tfidf_vect', TfidfVectorizer(max_df=700, ngram_range=(1,2))),
-    ('lr_clf', LogisticRegression(C=10))
+    ('lr_clf', LogisticRegression(C=10, max_iter=300))
 ])
 pipeline.fit(X_train, y_train)
 joblib.dump(pipeline, '../static/model/naver_tfidf_lr.pkl')
