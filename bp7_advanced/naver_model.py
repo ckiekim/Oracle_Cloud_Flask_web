@@ -7,25 +7,29 @@ import pandas as pd
 train_df = pd.read_csv("https://raw.githubusercontent.com/e9t/nsmc/master/ratings_train.txt", sep='\t')
 test_df = pd.read_csv("https://raw.githubusercontent.com/e9t/nsmc/master/ratings_test.txt", sep='\t')
 
+# train dataset
 # 중복 샘플 제거
 train_df.drop_duplicates(subset=['document'], inplace=True)
 # Null값 제거
-train_df = train_df.dropna(how = 'any')
-# 중복 제거
-test_df.drop_duplicates(subset=['document'], inplace=True)
-# Null 제거
-test_df = test_df.dropna(how='any')
-
-train_df['document'] = train_df['document'].str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
+train_df.dropna(how = 'any', inplace=True)
 train_df['document'].replace('', np.nan, inplace=True)
 train_df = train_df.dropna(how = 'any')
 print(train_df.shape)
+train_df['document'] = train_df['document'].str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
 
-test_df['document'] = test_df['document'].str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
-test_df['document'].replace('', np.nan, inplace=True)
+# test dataset - 전처리해서 없어질 데이터는 저장하지 않게 함
+# 중복 제거
+test_df.drop_duplicates(subset=['document'], inplace=True)
+# Null 제거
 test_df.dropna(how='any', inplace=True)
-print(test_df.shape)
-test_df.to_csv('../static/data/naver/movie_test.tsv', sep='\t', index=False)
+
+test_df['new_doc'] = test_df['document'].str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
+indices = list(test_df['new_doc'] != '')
+
+new_df = test_df.loc[indices,:]
+new_df.drop('new_doc', axis=1, inplace=True)
+print(new_df.shape)
+new_df.to_csv('../static/data/naver/movie_test.tsv', sep='\t', index=False)
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
