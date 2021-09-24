@@ -50,4 +50,4 @@ pipeline = Pipeline([
 ])
 pipeline.fit(X_train, y_train)
 joblib.dump(pipeline, '../static/model/news_tfidf_sv.pkl')
-print('Case 2. TfidfVecorizer + SVC done.')
+print('Case 3. TfidfVecorizer + SVC done.')
