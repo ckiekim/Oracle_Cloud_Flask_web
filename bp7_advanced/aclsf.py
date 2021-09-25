@@ -194,7 +194,7 @@ def news():
         return render_template('advanced/news_res.html', menu=menu, news=df.data[index],
                                 res=result_dict, weather=get_weather()) '''
 
-''' @aclsf_bp.route('/image', methods=['GET', 'POST'])
+@aclsf_bp.route('/image', methods=['GET', 'POST'])
 def image():
     if request.method == 'GET':
         return render_template('advanced/image.html', menu=menu, weather=get_weather())
@@ -211,7 +211,7 @@ def image():
         mtime = int(os.stat(file_img).st_mtime)
         return render_template('advanced/image_res.html', menu=menu, weather=get_weather(),
                                name=label[1], prob=np.round(label[2]*100, 2),
-                               filename=f_img.filename, mtime=mtime) '''      
+                               filename=f_img.filename, mtime=mtime)    
 
 @aclsf_bp.route('/detect', methods=['GET', 'POST'])
 def detect():
