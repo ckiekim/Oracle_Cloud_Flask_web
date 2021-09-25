@@ -31,12 +31,19 @@ def coffee():
         item = request.form['item']
         coffee_index = pd.read_csv('./static/data/커피지수.csv', 
                                    dtype={'이디야':int, '스타벅스':int, '커피빈':int, '빽다방':int})
+        map = pd.read_excel('./static/data/draw_korea_raw(2021).xlsx')
+        map = pd.DataFrame(map.stack())
+        map.reset_index(inplace=True)
+        map.columns = ['y','x','ID']
+        df = pd.merge(map, coffee_index, how='left')
+        df.to_csv('./static/data/커피지수2.csv', index=False)
+
         color_dict = {'커피지수':'Reds', '이디야':'Blues', '스타벅스':'Greens', '커피빈':'PuBu', '빽다방':'Oranges'}
         img_file = os.path.join(current_app.root_path, 'static/img/coffee.png')
-        dk.drawKorea(item, coffee_index, color_dict[item], img_file)
+        dk.drawKorea(item, df, color_dict[item], img_file)
         mtime = int(os.stat(img_file).st_mtime)
 
-        df = coffee_index.sort_values(by=item, ascending=False)[['ID',item]].reset_index()
+        df = df.sort_values(by=item, ascending=False)[['ID',item]].reset_index()
         top10 = {}
         for i in range(10):
             top10[df['ID'][i]] = round(df[item][i], 2)
