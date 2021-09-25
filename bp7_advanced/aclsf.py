@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, session, g
-from flask import current_app, redirect
+from flask import current_app, redirect, url_for
 from sklearn.datasets import load_digits
 from konlpy.tag import Okt
 #from tensorflow.keras.applications.resnet50 import ResNet50, decode_predictions
@@ -163,7 +163,7 @@ def naver():
         return render_template('advanced/naver_res.html', menu=menu, review=org_review,
                                 res=result_dict, weather=get_weather())
 
-@aclsf_bp.route('/news', methods=['GET', 'POST'])
+''' @aclsf_bp.route('/news', methods=['GET', 'POST'])
 def news():
     target_names = ['alt.atheism', 'comp.graphics', 'comp.os.ms-windows.misc',
                     'comp.sys.ibm.pc.hardware', 'comp.sys.mac.hardware', 'comp.windows.x',
@@ -192,7 +192,7 @@ def news():
                        'pred_t_sv':f'{pred_t_sv[0]} ({target_names[pred_t_sv[0]]})'}
         
         return render_template('advanced/news_res.html', menu=menu, news=df.data[index],
-                                res=result_dict, weather=get_weather())
+                                res=result_dict, weather=get_weather()) '''
 
 ''' @aclsf_bp.route('/image', methods=['GET', 'POST'])
 def image():
@@ -260,7 +260,7 @@ def detect():
             y = int(obj['y'])
             w = int(obj['width'])
             h = int(obj['height'])
-            draw.text((x+10,y+10), name, font=ImageFont.truetype('malgun.ttf', 20), fill=(255,0,0))
+            draw.text((x+10,y+10), name, font=ImageFont.truetype('NanumGothic.ttf', 20), fill=(255,0,0))
             draw.rectangle(((x, y), (x+w, y+h)), outline=(255,0,0), width=2)
             object_list.append(name)
         object_img = os.path.join(current_app.root_path, 'static/img/object.'+image_type)
