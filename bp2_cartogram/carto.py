@@ -8,7 +8,7 @@ from my_util.weather import get_weather
 import my_util.drawKorea as dk
 
 carto_bp = Blueprint('carto_bp', __name__)
-menu = {'ho':0, 'da':1, 'ml':0, 
+menu = {'ho':0, 'bb':0, 'li':0, 'rg':0,
         'se':0, 'cg':1, 'cr':0, 'wc':0, 'rs':0,
         'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
 
@@ -29,14 +29,9 @@ def coffee():
         return render_template('cartogram/coffee.html', menu=menu, weather=get_weather())
     else:
         item = request.form['item']
-        f = request.files['csv']
-        #filename = os.path.join(current_app.root_path, 'static/upload/') + secure_filename(f.filename)
-        filename = os.path.join(current_app.root_path, 'static/upload/') + f.filename
-        f.save(filename)
-        current_app.logger.info(f'{filename} is saved.')
-
-        coffee_index = pd.read_csv(filename, dtype={'이디야 매장수':int, '스타벅스 매장수':int,
-                                    '커피빈 매장수':int, '빽다방 매장수':int})
+        coffee_index = pd.read_csv('./static/data/커피지수.csv', 
+                                   dtype={'이디야 매장수':int, '스타벅스 매장수':int,
+                                          '커피빈 매장수':int, '빽다방 매장수':int})
         color_dict = {'커피지수':'Reds', '이디야 매장수':'Blues', '스타벅스 매장수':'Greens',
                       '커피빈 매장수':'Purples', '빽다방 매장수':'PuBu'}
         img_file = os.path.join(current_app.root_path, 'static/img/coffee.png')

@@ -5,31 +5,62 @@
 {% endblock %}
 {% block content %}
     <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
-            <form action="/cartogram/coffee" method="POST" enctype="multipart/form-data">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form action="/cartogram/coffee" method="POST">
                 <table class="table table-borderless">
                     <tr>
-                        <td><label for="item">항목</label></td>
                         <td>
-                            <select class="custom-select" id="item" name="item">
-                                {% for item in ['커피지수','이디야 매장수','스타벅스 매장수','커피빈 매장수','빽다방 매장수'] %}
-                                    <option value="{{item}}">{{item}}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>CSV 파일</td>
-                        <td>
-                            <div class="custom-file mb-3">
-                                <input type="file" class="custom-file-input" id="csv" name="csv">
-                                <label class="custom-file-label" for="csv">업로드할 파일 선택</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="item" id="item1" value="커피지수" checked>
+                                <label class="form-check-label" for="item1">
+                                    커피지수
+                                </label>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="text-align: center;">
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="item" id="item2" value="스타벅스 매장수">
+                                <label class="form-check-label" for="item2">
+                                    스타벅스
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="item" id="item3" value="이디야 매장수">
+                                <label class="form-check-label" for="item3">
+                                    이디야
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="item" id="item4" value="커피빈 매장수">
+                                <label class="form-check-label" for="item4">
+                                    커피빈
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="item" id="item5" value="빽다방 매장수">
+                                <label class="form-check-label" for="item5">
+                                    빽다방
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">
                             <button type="submit" class="btn btn-primary mr-2">실행</button>
                             <button type="reset" class="btn btn-secondary">취소</button>
                         </td>
@@ -37,14 +68,6 @@
                 </table>		
             </form>
         </div>
-        <div class="col-2"></div>
+        <div class="col-4"></div>
     </div>
-{% endblock %}
-{% block additional_body %}
-    <script>
-        $(".custom-file-input").on("change", function() {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
-    </script>
 {% endblock %}
