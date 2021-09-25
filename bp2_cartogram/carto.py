@@ -30,10 +30,8 @@ def coffee():
     else:
         item = request.form['item']
         coffee_index = pd.read_csv('./static/data/커피지수.csv', 
-                                   dtype={'이디야 매장수':int, '스타벅스 매장수':int,
-                                          '커피빈 매장수':int, '빽다방 매장수':int})
-        color_dict = {'커피지수':'Reds', '이디야 매장수':'Blues', '스타벅스 매장수':'Greens',
-                      '커피빈 매장수':'Purples', '빽다방 매장수':'PuBu'}
+                                   dtype={'이디야':int, '스타벅스':int, '커피빈':int, '빽다방':int})
+        color_dict = {'커피지수':'Reds', '이디야':'Blues', '스타벅스':'Greens', '커피빈':'PuBu', '빽다방':'Oranges'}
         img_file = os.path.join(current_app.root_path, 'static/img/coffee.png')
         dk.drawKorea(item, coffee_index, color_dict[item], img_file)
         mtime = int(os.stat(img_file).st_mtime)
