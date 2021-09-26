@@ -58,7 +58,7 @@ def cluster():
             x_axis_data = df[df.target == i]['pca_x']
             y_axis_data = df[df.target == i]['pca_y']
             plt.scatter(x_axis_data, y_axis_data, marker=marker)
-        plt.title('Original Data Visualization by 2 PCA Components')
+        plt.title('Original Data', fontsize=15)
         plt.xlabel('PCA 1'); plt.ylabel('PCA 2')
         img_file = os.path.join(current_app.root_path, 'static/img/cluster0.png')
         plt.savefig(img_file)
@@ -70,7 +70,7 @@ def cluster():
             y_axis_data = df[df.cluster == i]['pca_y']
             plt.scatter(x_axis_data, y_axis_data, marker=marker)
         plt.xlabel('PCA 1'); plt.ylabel('PCA 2')
-        plt.title(f'{k_number} Clusters Visualization by 2 PCA Components')
+        plt.title(f'{k_number} Clustering Result', fontsize=15)
         img_file = os.path.join(current_app.root_path, 'static/img/cluster1.png')
         plt.savefig(img_file)
 
