@@ -16,7 +16,7 @@ menu = {'ho':0, 'bb':0, 'li':0, 'rg':0,
 @cloud_bp.route('/text', methods=['GET', 'POST'])
 def text():
     if request.method == 'GET':
-        return render_template('wordcloud/text.html', menu=menu, weather=get_weather_main())
+        return render_template('wordcloud/text.html', menu=menu, weather=get_weather())
     else:
         lang = request.form['lang']
         f_text = request.files['text']
