@@ -15,7 +15,13 @@ def gift():
     textfile = os.path.join(current_app.root_path, 'static/data/gift.txt')
     maskfile = os.path.join(current_app.root_path, 'static/img/heart.jpg')
     logging.debug(f'{textfile}, {maskfile}')
-    stop_words = []
+    stoptext = """
+        선물 추천 것 가격 수 기능 제품 저 제 생각 여자 여자친구 사용 요 더 꽃 구매 고급
+        판매 때 참고 머리 하나 해 한번 제작 용 준 디자인 거 네이버 사람 배송 중 후기 감동
+        하트 여친 커플 가능 사랑 인기 상품 직접 브랜드 선택 곳 모양 마감 요즘 노늘 가지 남녀
+        그냥 위 페이 마음 부담 오늘 남자 협찬 전 핸드 의미 도움 색상 아래 포장 처 조금 하루 정도
+    """
+    stop_words = stoptext.split()
     img_file = os.path.join(current_app.root_path, 'static/img/text.png')
     with open(textfile) as fp:
         text = fp.read()
