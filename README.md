@@ -34,7 +34,7 @@
 #### 1) Install Chrome.
 - vi /etc/yum.repos.d/google-chrome.repo
 
-- # Make sure you have below info in the file(remove hash).
+- Make sure you have below info in the file(remove hash).
 - #[google-chrome]
 - #name=google-chrome
 - #baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
@@ -60,7 +60,7 @@
 - sudo pip install konlpy
 
 #### Tensorflow 설치
-pip install tensorflow
+- sudo pip install tensorflow
 
 #### 20 News Group
 Oracle cloud 에서는 모델 만드는 것이 거의 불가능
