@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, session, g
 from flask import current_app
 from werkzeug.utils import secure_filename
-import os
+import os, logging
 from my_util.weather import get_weather
 from my_util.wordCloud import engCloud, hanCloud
 
@@ -14,6 +14,7 @@ menu = {'ho':0, 'bb':0, 'li':0, 'rg':0,
 def gift():
     textfile = os.path.join(current_app.root_path, 'static/data/gift.txt')
     maskfile = os.path.join(current_app.root_path, 'static/img/heart.jpg')
+    logging.debug(f'{textfile}, {maskfile}')
     stop_words = []
     img_file = os.path.join(current_app.root_path, 'static/img/cloud.png')
     with open(textfile) as fp:
@@ -35,6 +36,7 @@ def eng(option):
         stop_words = ['int', 'ext']
     
     textfile = os.path.join(current_app.root_path, 'static/data/') + filename
+    logging.debug(f'{textfile}, {maskfile}')
     img_file = os.path.join(current_app.root_path, 'static/img/cloud.png')
     with open(textfile) as fp:
         text = fp.read()

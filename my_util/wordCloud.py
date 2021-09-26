@@ -38,13 +38,13 @@ def hanCloud(text, stop_words, mask_file, img_file, max_words=1000):
     data = han_text.vocab().most_common(300)
     if mask_file == None:
         wc = WordCloud(#font_path='c:/Windows/Fonts/malgun.ttf',
-                        width=800, height=800,
+                        width=800, height=800, max_words=max_words, 
                         relative_scaling = 0.2, background_color='black',
                         ).generate_from_frequencies(dict(data))
     else:
         mask = np.array(Image.open(mask_file))
         wc = WordCloud(#font_path='c:/Windows/Fonts/malgun.ttf',
-                        width=800, height=800,
+                        width=800, height=800, max_words=max_words, 
                         relative_scaling = 0.2, mask=mask,
                         background_color='white',
                         ).generate_from_frequencies(dict(data))
