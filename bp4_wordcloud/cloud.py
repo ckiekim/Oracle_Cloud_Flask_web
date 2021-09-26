@@ -43,7 +43,7 @@ def text():
         return render_template('wordcloud/text_res.html', menu=menu, weather=get_weather_main(),
                                 filename=f_text.filename, mtime=mtime)
 
-@word_bp.route('/sports_news')
+@cloud_bp.route('/sports_news')
 def sports_news():
     text_file = os.path.join(current_app.root_path, 'static/data/sports.txt')
     get_sports_news(text_file)
