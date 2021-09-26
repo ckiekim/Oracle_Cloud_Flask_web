@@ -37,13 +37,13 @@ def hanCloud(text, stop_words, mask_file, img_file, max_words=1000):
     han_text = nltk.Text(new_text, name='한글 텍스트')
     data = han_text.vocab().most_common(300)
     if mask_file == None:
-        wc = WordCloud(#font_path='c:/Windows/Fonts/malgun.ttf',
+        wc = WordCloud(font_path='/usr/share/fonts/NanumFont_TTF_ALL/NanumGothic.ttf',
                         width=800, height=800, max_words=max_words, 
                         relative_scaling = 0.2, background_color='black',
                         ).generate_from_frequencies(dict(data))
     else:
         mask = np.array(Image.open(mask_file))
-        wc = WordCloud(#font_path='c:/Windows/Fonts/malgun.ttf',
+        wc = WordCloud(font_path='/usr/share/fonts/NanumFont_TTF_ALL/NanumGothic.ttf',
                         width=800, height=800, max_words=max_words, 
                         relative_scaling = 0.2, mask=mask,
                         background_color='white',
