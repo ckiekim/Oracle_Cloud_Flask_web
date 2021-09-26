@@ -21,7 +21,7 @@ def engCloud(text, stop_words, mask_file, img_file, max_words=1000):
     else:
         mask = np.array(Image.open(mask_file))
         wc = WordCloud(background_color='white', width=800, height=800, max_words=max_words, 
-                       mask=mask, stopwords=stopwords, colormap=palettes[index])
+                       mask=mask, stopwords=stopwords)
     wc = wc.generate(text)
     plt.figure(figsize=(8,8), dpi=100)
     #ax = plt.axes([0,0,1,1])
