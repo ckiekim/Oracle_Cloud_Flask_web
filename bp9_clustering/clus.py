@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, session, g
-from flask import current_app
+from flask import current_app, flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -19,11 +19,20 @@ def cluster():
     if request.method == 'GET':
         return render_template('cluster/cluster.html', menu=menu, weather=get_weather())
     else:
-        k_number = int(request.form['k_number'])
-        f_csv = request.files['csv']
-        file_csv = os.path.join(current_app.root_path, 'static/upload/') + f_csv.filename
-        f_csv.save(file_csv)
-        current_app.logger.debug(f"{k_number}, {f_csv}, {file_csv}")
+        try:
+            k_number = int(request.form['k_number'])
+        except:
+            flash('군집수를 입력하세요.')
+            return redirect(url_for('clus_bp.cluster'))
+
+        option = request.form['option']
+        if option == 'direct':
+            f_csv = request.files['csv']
+            file_csv = os.path.join(current_app.root_path, 'static/upload/') + f_csv.filename
+            f_csv.save(file_csv)
+            current_app.logger.debug(f"{k_number}, {f_csv}, {file_csv}")
+        else:
+            file_csv = os.path.join(current_app.root_path, 'static/clus_pca_data/') + option + '.csv'
 
         df_csv = pd.read_csv(file_csv)
         # 전처리 - 정규화
