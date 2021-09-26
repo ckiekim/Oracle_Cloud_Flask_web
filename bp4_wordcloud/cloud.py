@@ -8,25 +8,12 @@ from my_util.weather import get_weather
 from my_util.wordCloud import engCloud, hanCloud
 from my_util.sports_news import get_sports_news
 
-word_bp = Blueprint('word_bp', __name__)
-menu = {'ho':0, 'da':1, 'ml':0, 
-        'se':0, 'co':0, 'cg':0, 'cr':0, 'wc':1,
+cloud_bp = Blueprint('cloud_bp', __name__)
+menu = {'ho':0, 'bb':0, 'li':0, 'rg':0,
+        'se':0, 'cg':0, 'cr':0, 'wc':1, 'rs':0,
         'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
 
-def get_weather_main():
-    ''' weather = None
-    try:
-        weather = session['weather']
-    except:
-        current_app.logger.info("get new weather info")
-        weather = get_weather()
-        session['weather'] = weather
-        session.permanent = True
-        current_app.permanent_session_lifetime = timedelta(minutes=60) '''
-    weather = get_weather()
-    return weather
-
-@word_bp.route('/text', methods=['GET', 'POST'])
+@cloud_bp.route('/text', methods=['GET', 'POST'])
 def text():
     if request.method == 'GET':
         return render_template('wordcloud/text.html', menu=menu, weather=get_weather_main())

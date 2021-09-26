@@ -5,6 +5,7 @@ import json, logging
 from bp1_seoul.seoul import seoul_bp
 from bp2_cartogram.carto import carto_bp
 from bp3_crawling.crawl import crawl_bp
+from bp4_wordcloud.cloud import cloud_bp
 from bp5_recommendation.rcmd import rcmd_bp
 from bp6_classification.clsf import clsf_bp
 #from bp7_advanced.aclsf import aclsf_bp
@@ -20,6 +21,7 @@ app.config['SESSION_COOKIE_PATH'] = '/'
 app.register_blueprint(seoul_bp, url_prefix='/seoul')
 app.register_blueprint(carto_bp, url_prefix='/cartogram')
 app.register_blueprint(crawl_bp, url_prefix='/crawling')
+app.register_blueprint(cloud_bp, url_prefix='/wordcloud')
 app.register_blueprint(rcmd_bp, url_prefix='/recommendation')
 app.register_blueprint(clsf_bp, url_prefix='/classification')
 #app.register_blueprint(aclsf_bp, url_prefix='/advanced')
