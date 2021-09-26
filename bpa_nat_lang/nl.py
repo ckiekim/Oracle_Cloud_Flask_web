@@ -18,10 +18,10 @@ def translate():
         text = request.form['text']
         lang = request.form['lang']
 
-        # 카카오
+        # 카카오 번역기
         with open('static/keys/kakaoaikey.txt') as kfile:
             kai_key = kfile.read(100)
-        text = text.replace('\n',''); text = text.replace('\r','')
+        text = text.replace('\n',' ').replace('\r','')
         k_url = f'https://dapi.kakao.com/v2/translation/translate?query={quote(text)}&src_lang=kr&target_lang={lang}'
         result = requests.get(k_url,
                               headers={"Authorization": "KakaoAK "+kai_key}).json()
@@ -46,22 +46,15 @@ def emotion():
                               headers={"Authorization": "KakaoAK "+kai_key}).json()
         lang = result['language_info'][0]['code']
 
-        # 네이버 파파고
-        with open('static/keys/papago_key.json') as nkey:
-            json_obj = json.load(nkey)
-        client_id = list(json_obj.keys())[0]
-        client_secret = json_obj[client_id]
-        url = "https://naveropenapi.apigw.ntruss.com/nmt/v1/translation"
-        headers = {
-            "X-NCP-APIGW-API-KEY-ID": client_id,
-            "X-NCP-APIGW-API-KEY": client_secret
-        }
+        # 카카오 번역기
         if lang == 'kr':
-            val = {"source": 'ko', "target": 'en', "text": text}
+            k_url = f'https://dapi.kakao.com/v2/translation/translate?query={quote(text)}&src_lang=kr&target_lang=en'
         else:
-            val = {"source": 'en', "target": 'ko', "text": text}
-        result = requests.post(url, data=val, headers=headers).json()
-        tr_text = result['message']['result']['translatedText']
+            k_url = f'https://dapi.kakao.com/v2/translation/translate?query={quote(text)}&src_lang=en&target_lang=kr'
+        result = requests.get(k_url,
+                              headers={"Authorization": "KakaoAK "+kai_key}).json()
+        tr_text_list = result['translated_text'][0]
+        tr_text = '\n'.join([tmp_text for tmp_text in tr_text_list])
 
         okt = Okt()
         stopwords = ['의','가','이','은','들','는','좀','잘','걍','과','도','를','으로','자','에','와','한','하다','을']
