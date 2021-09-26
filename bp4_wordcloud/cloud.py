@@ -1,17 +1,50 @@
 from flask import Blueprint, render_template, request, session, g
 from flask import current_app
 from werkzeug.utils import secure_filename
-from datetime import timedelta
-import os, folium, json
-import pandas as pd
+import os
 from my_util.weather import get_weather
 from my_util.wordCloud import engCloud, hanCloud
-from my_util.sports_news import get_sports_news
 
 cloud_bp = Blueprint('cloud_bp', __name__)
 menu = {'ho':0, 'bb':0, 'li':0, 'rg':0,
         'se':0, 'cg':0, 'cr':0, 'wc':1, 'rs':0,
         'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
+
+@cloud_bp.route('/han/gift')
+def gift():
+    textfile = os.path.join(current_app.root_path, 'static/data/gift.txt')
+    maskfile = os.path.join(current_app.root_path, 'static/img/heart.jpg')
+    stop_words = []
+    img_file = os.path.join(current_app.root_path, 'static/img/cloud.png')
+    with open(textfile) as fp:
+        text = fp.read()
+    hanCloud(text, stop_words, maskfile, img_file)
+    mtime = int(os.stat(img_file).st_mtime)
+    return render_template('wordcloud/text_res.html', menu=menu, weather=get_weather(),
+                            filename='gift.txt', mtime=mtime)
+
+@cloud_bp.route('/eng/<option>')
+def eng(option):
+    if option == 'Alice':
+        filename = 'Alice.txt'
+        maskfile = os.path.join(current_app.root_path, 'static/img/Alice_mask.png')
+        stop_words = ['said']
+    else:
+        filename = 'A_new_hope.txt'
+        maskfile = os.path.join(current_app.root_path, 'static/img/Stormtrooper_mask.png')
+        stop_words = ['int', 'ext']
+    
+    textfile = os.path.join(current_app.root_path, 'static/data/') + filename
+    img_file = os.path.join(current_app.root_path, 'static/img/cloud.png')
+    with open(textfile) as fp:
+        text = fp.read()
+    if option == 'Starwars':
+        text = text.replace('HAN', 'Han')
+        text = text.replace("LUKE'S", 'Luke')
+    engCloud(text, stop_words, maskfile, img_file)
+    mtime = int(os.stat(img_file).st_mtime)
+    return render_template('wordcloud/text_res.html', menu=menu, weather=get_weather(),
+                            filename=filename, mtime=mtime)        
 
 @cloud_bp.route('/text', methods=['GET', 'POST'])
 def text():
@@ -42,17 +75,3 @@ def text():
         mtime = int(os.stat(img_file).st_mtime)
         return render_template('wordcloud/text_res.html', menu=menu, weather=get_weather(),
                                 filename=f_text.filename, mtime=mtime)
-
-@cloud_bp.route('/sports_news')
-def sports_news():
-    text_file = os.path.join(current_app.root_path, 'static/data/sports.txt')
-    get_sports_news(text_file)
-
-    text = open(text_file, encoding='utf-8').read()
-    stop_words = ['오피셜']
-    mask_file = os.path.join(current_app.root_path, 'static/img/ball.jpg')
-    img_file = os.path.join(current_app.root_path, 'static/img/sports.png')
-    hanCloud(text, stop_words, mask_file, img_file)
-    mtime = int(os.stat(img_file).st_mtime)
-    return render_template('wordcloud/sports_res.html', menu=menu, weather=get_weather(),
-                            mtime=mtime)

@@ -1,7 +1,7 @@
 import requests
 
 def get_weather(lat=37.311494, lng=127.075369):
-    with open('./my_util/openweatherkey.txt', mode='r') as key_fd:
+    with open('./static/keys/openweatherkey.txt') as key_fd:
         oweather_key = key_fd.read()
 
     open_weather = 'http://api.openweathermap.org/data/2.5/weather'
