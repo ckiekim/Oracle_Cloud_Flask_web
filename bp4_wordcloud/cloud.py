@@ -40,7 +40,7 @@ def text():
             hanCloud(text, stop_words, file_mask, img_file)
 
         mtime = int(os.stat(img_file).st_mtime)
-        return render_template('wordcloud/text_res.html', menu=menu, weather=get_weather_main(),
+        return render_template('wordcloud/text_res.html', menu=menu, weather=get_weather(),
                                 filename=f_text.filename, mtime=mtime)
 
 @cloud_bp.route('/sports_news')
@@ -54,5 +54,5 @@ def sports_news():
     img_file = os.path.join(current_app.root_path, 'static/img/sports.png')
     hanCloud(text, stop_words, mask_file, img_file)
     mtime = int(os.stat(img_file).st_mtime)
-    return render_template('wordcloud/sports_res.html', menu=menu, weather=get_weather_main(),
+    return render_template('wordcloud/sports_res.html', menu=menu, weather=get_weather(),
                             mtime=mtime)
