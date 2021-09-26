@@ -16,7 +16,7 @@ def gift():
     maskfile = os.path.join(current_app.root_path, 'static/img/heart.jpg')
     logging.debug(f'{textfile}, {maskfile}')
     stop_words = []
-    img_file = os.path.join(current_app.root_path, 'static/img/cloud.png')
+    img_file = os.path.join(current_app.root_path, 'static/img/text.png')
     with open(textfile) as fp:
         text = fp.read()
     hanCloud(text, stop_words, maskfile, img_file)
@@ -37,7 +37,7 @@ def eng(option):
     
     textfile = os.path.join(current_app.root_path, 'static/data/') + filename
     logging.debug(f'{textfile}, {maskfile}')
-    img_file = os.path.join(current_app.root_path, 'static/img/cloud.png')
+    img_file = os.path.join(current_app.root_path, 'static/img/text.png')
     with open(textfile) as fp:
         text = fp.read()
     if option == 'Starwars':
