@@ -8,7 +8,7 @@ from bp3_crawling.crawl import crawl_bp
 from bp4_wordcloud.cloud import cloud_bp
 from bp5_recommendation.rcmd import rcmd_bp
 from bp6_classification.clsf import clsf_bp
-#from bp7_advanced.aclsf import aclsf_bp
+from bp7_advanced.aclsf import aclsf_bp
 from bp8_regression.rgrs import rgrs_bp
 from bp9_clustering.clus import clus_bp
 from bpa_nat_lang.nl import nl_bp
@@ -25,7 +25,7 @@ app.register_blueprint(crawl_bp, url_prefix='/crawling')
 app.register_blueprint(cloud_bp, url_prefix='/wordcloud')
 app.register_blueprint(rcmd_bp, url_prefix='/recommendation')
 app.register_blueprint(clsf_bp, url_prefix='/classification')
-#app.register_blueprint(aclsf_bp, url_prefix='/advanced')
+app.register_blueprint(aclsf_bp, url_prefix='/advanced')
 app.register_blueprint(rgrs_bp, url_prefix='/regression')
 app.register_blueprint(clus_bp, url_prefix='/cluster')
 app.register_blueprint(nl_bp, url_prefix='/nat_lang')
