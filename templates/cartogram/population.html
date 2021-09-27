@@ -25,12 +25,16 @@
             </table>
         </div>
         <div class="col-3">
-            <button class="btn btn-primary" style="margin-top: 200px;"
+            <button class="btn btn-primary" style="margin-top: 180px;"
                     onclick="location.href='/cartogram/pop/crisis_area'">소멸위기지역</button><br>
             <button class="btn btn-primary mt-3" 
                     onclick="location.href='/cartogram/pop/crisis_ratio'">소멸비율</button>
             <button class="btn btn-primary mt-3" 
                     onclick="location.href='/cartogram/pop/high_crisis'">소멸위기고위험지역</button>
+            <br><br><p>
+                ※ 인구소멸위기지수는 만 20~39세 여성 인구 수를 만 65세 이상 고령 인구 수로 나눈 값이며, 
+                이 값이 0.5 이하인 지역을 소멸위기지역이라고 함.
+            </p>
         </div>
     </div>   
 {% endblock %}
