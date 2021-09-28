@@ -77,7 +77,11 @@ $ sudo pip install selenium
 <pre>
 $ sudo yum install java-11-openjdk-headless
 $ sudo vi /etc/profile.d/java.sh
-$ JAVA_HOME="/usr/lib/jvm/java-11-openjdk-11.0.12.0.7-0.el8_4.x86_64"
+</pre>
+<pre>
+JAVA_HOME="/usr/lib/jvm/java-11-openjdk-11.0.12.0.7-0.el8_4.x86_64"
+</pre>
+<pre>
 $ sudo pip install konlpy
 </pre>
 
