@@ -33,16 +33,6 @@
                     <i class="fa fa-home"></i> Home
                 </a>
             </li>
-            <!-- <li class="nav-item mr-3">
-                <a class="nav-link {% if menu.da %}active{% endif %}" href="#">
-                    <i class="fas fa-chart-line"></i> 데이터 분석
-                </a>
-            </li>
-            <li class="nav-item mr-3">
-                <a class="nav-link {% if menu.ml %}active{% endif %}" href="#">
-                    <i class="fas fa-brain"></i> 머신 러닝
-                </a>
-            </li> -->
             <li class="nav-item mr-5">
                 <a class="nav-link {% if menu.bb %}active{% endif %}" 
                    href="{% if menu.bb %}#{% else %}/bbs/list/1{% endif %}">
@@ -187,6 +177,7 @@
                            data-toggle="dropdown" href="#">자연어</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/nat_lang/translate">번역기</a>
+                            <a class="dropdown-item" href="/nat_lang/tts">음성합성</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/nat_lang/emotion">외국어 감성분석</a>
                         </div>

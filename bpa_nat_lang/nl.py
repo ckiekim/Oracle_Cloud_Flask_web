@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, session
 from flask import current_app, redirect, url_for
 import os, json, requests, re, joblib
 from urllib.parse import quote
-from konlpy.tag import Okt
+#from konlpy.tag import Okt
 from my_util.weather import get_weather
 
 nl_bp = Blueprint('nl_bp', __name__)
@@ -20,7 +20,7 @@ def translate():
 
         # 카카오 번역기
         with open('static/keys/kakaoaikey.txt') as kfile:
-            kai_key = kfile.read(100)
+            kai_key = kfile.read()
         text = text.replace('\n',' ').replace('\r','')
         k_url = f'https://dapi.kakao.com/v2/translation/translate?query={quote(text)}&src_lang=kr&target_lang={lang}'
         result = requests.get(k_url,
@@ -30,6 +30,32 @@ def translate():
 
         return render_template('nat_lang/translate_res.html', menu=menu, weather=get_weather(),
                                 org=text, kakao=k_translated_text, lang=lang)
+
+@nl_bp.route('/tts', methods=['GET', 'POST'])
+def tts():
+    if request.method == 'GET':
+        return render_template('nat_lang/tts.html', menu=menu, weather=get_weather())
+    else:
+        text = request.form['text']
+
+        # 카카오 음성합성 - 음성 활성화 설정을 ON 해야함
+        with open('static/keys/kakaoaikey.txt') as kfile:
+            kai_key = kfile.read()
+        data = f'<speak>{text}</speak>'
+        t_url = 'https://kakaoi-newtone-openapi.kakao.com/v1/synthesize'
+        headers={"Content-Type": "application/xml",
+                "Authorization": "KakaoAK " + kai_key}
+        response = requests.post(t_url, data=data.encode('utf-8'), headers=headers)
+        rescode = response.status_code
+        audio_file = os.path.join(current_app.root_path, 'static/img/tts.mp3')
+        if rescode == 200:
+            with open(audio_file, 'wb') as f:
+                f.write(response.content)
+        mtime = int(os.stat(audio_file).st_mtime)
+
+        return render_template('nat_lang/tts_res.html', menu=menu, weather=get_weather(),
+                                text=text, mtime=mtime)
+
 
 @nl_bp.route('/emotion', methods=['GET', 'POST'])
 def emotion():
