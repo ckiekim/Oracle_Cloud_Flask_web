@@ -60,7 +60,7 @@ def write():
         title = request.form['title']
         content = request.form['content']
         if len(title) > 100 or len(content) > 1000:
-            flash('제목을 100자 이하로 줄여주세요.\n' * (len(title) > 100) + 
+            flash('제목을 100자 이하로 줄여주세요. ' * (len(title) > 100) + 
                   '본문을 1000자 이하로 줄여주세요' * (len(content) > 1000))
             return redirect(url_for('bbs_bp.write'))
         dm.insert_bbs((session['uid'], title, content))
@@ -80,7 +80,7 @@ def update(uid, bid):
         title = request.form['title']
         content = request.form['content']
         if len(title) > 100 or len(content) > 1000:
-            flash('제목을 100자 이하로 줄여주세요.\n' * (len(title) > 100) + 
+            flash('제목을 100자 이하로 줄여주세요. ' * (len(title) > 100) + 
                   '본문을 1000자 이하로 줄여주세요' * (len(content) > 1000))
             return redirect(f'/bbs/update/{uid}/bid/{bid}')
         dm.update_bbs((title, content, bid))
