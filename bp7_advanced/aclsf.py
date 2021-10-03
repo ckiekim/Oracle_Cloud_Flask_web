@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from my_util.weather import get_weather
 
 aclsf_bp = Blueprint('aclsf_bp', __name__)
-menu = {'ho':0, 'bb':0, 'li':0, 'rg':0,
+menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
         'se':0, 'cg':0, 'cr':0, 'wc':0, 'rs':0,
         'cf':0, 'ac':1, 're':0, 'cu':0, 'nl':0}
 

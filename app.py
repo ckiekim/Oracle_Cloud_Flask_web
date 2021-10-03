@@ -38,7 +38,7 @@ dictConfig(config)
 
 @app.route('/')
 def index():
-    menu = {'ho':1, 'bb':0, 'li':0, 'rg':0,
+    menu = {'ho':1, 'bb':0, 'us':0, 'li':0,
             'se':0, 'cg':0, 'cr':0, 'wc':0, 'rs':0,
             'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
     client_addr = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)

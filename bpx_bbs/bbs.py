@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template, request, session
 from flask import current_app, redirect, url_for, flash
-from datetime import date, timedelta
-import os, logging, math
+from datetime import date
+import logging, math
 import db.db_module as dm
 from my_util.weather import get_weather
 
 bbs_bp = Blueprint('bbs_bp', __name__)
-menu = {'ho':0, 'bb':1, 'li':0, 'rg':0, 
+menu = {'ho':0, 'bb':1, 'us':0, 'li':0, 
         'se':0, 'cg':0, 'cr':0, 'wc':0, 'rs':0,
         'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
 

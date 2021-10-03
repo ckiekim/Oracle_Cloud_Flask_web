@@ -1,13 +1,11 @@
 from flask import Blueprint, render_template, request, session, g
 from flask import current_app
-from datetime import datetime, timedelta
-from sklearn.preprocessing import MinMaxScaler
 import os, joblib
 import pandas as pd
 from my_util.weather import get_weather
 
 clsf_bp = Blueprint('clsf_bp', __name__)
-menu = {'ho':0, 'bb':0, 'li':0, 'rg':0,
+menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
         'se':0, 'cg':0, 'cr':0, 'wc':0, 'rs':0,
         'cf':1, 'ac':0, 're':0, 'cu':0, 'nl':0}
 

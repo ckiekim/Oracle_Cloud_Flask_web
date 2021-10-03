@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, session, g
 from flask import current_app
-from datetime import datetime, timedelta
 from sklearn.linear_model import LinearRegression
 import os
 import numpy as np
@@ -9,7 +8,7 @@ import matplotlib.pyplot as plt
 from my_util.weather import get_weather
 
 rgrs_bp = Blueprint('rgrs_bp', __name__)
-menu = {'ho':0, 'bb':0, 'li':0, 'rg':0,
+menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
         'se':0, 'cg':0, 'cr':0, 'wc':0, 'rs':0,
         'cf':0, 'ac':0, 're':1, 'cu':0, 'nl':0}
 
