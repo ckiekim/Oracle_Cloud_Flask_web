@@ -23,6 +23,48 @@ def insert_user(params):
     cur.close()
     conn.close()
 
+def get_user_list(offset=0):
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = '''SELECT uid, uname, email, DATE_FORMAT(reg_date, '%%Y-%%m-%%d') AS rdate 
+                FROM users
+                WHERE is_deleted=0
+                ORDER BY reg_date DESC 
+                LIMIT 10 offset %s;'''
+    cur.execute(sql, (offset,))
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return rows
+
+def get_user_counts():
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = 'SELECT count(*) AS count FROM users WHERE is_deleted=0;'
+    cur.execute(sql)
+    result = cur.fetchone()
+    cur.close()
+    conn.close()
+    return result[0]
+
+def update_user(params):
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = "UPDATE users SET pwd=%s, uname=%s, email=%s WHERE uid=%s;"
+    cur.execute(sql, params)
+    conn.commit()
+    cur.close()
+    conn.close()
+
+def delete_user(uid):
+    conn = pymysql.connect(**config)
+    cur = conn.cursor()
+    sql = "UPDATE users SET is_deleted=1 WHERE uid=%s;"
+    cur.execute(sql, (uid,))
+    conn.commit()
+    cur.close()
+    conn.close()
+
 def get_bbs_list(offset=0):
     conn = pymysql.connect(**config)
     cur = conn.cursor()

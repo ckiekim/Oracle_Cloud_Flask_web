@@ -33,10 +33,16 @@
                     <i class="fa fa-home"></i> Home
                 </a>
             </li>
-            <li class="nav-item mr-5">
+            <li class="nav-item mr-4">
                 <a class="nav-link {% if menu.bb %}active{% endif %}" 
                    href="{% if menu.bb %}#{% else %}/bbs/list/1{% endif %}">
                     <i class="far fa-list-alt"></i> 자유게시판
+                </a>
+            </li>
+            <li class="nav-item mr-4">
+                <a class="nav-link {% if menu.us %}active{% endif %}" 
+                   href="{% if menu.us %}#{% else %}/user/list/1{% endif %}">
+                   <i class="fas fa-user-friends"></i> 사용자
                 </a>
             </li>
             {% if session['uid'] %}
@@ -56,11 +62,11 @@
                         <i class="fas fa-sign-in-alt"></i> 로그인
                     </a>
                 </li>
-                <li class="nav-item mr-3">
+                <!-- <li class="nav-item mr-3">
                     <a class="nav-link {% if menu.rg %}active{% endif %}" href="/user/register">
                         <i class="fas fa-user-plus"></i> 회원가입
                     </a>
-                </li>
+                </li> -->
             {% endif %}
             <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>

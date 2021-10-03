@@ -9,6 +9,9 @@
 {% block weather %} {{ weather|safe() }} {% endblock %}
 {% block subtitle %}
     <strong>로그인</strong>
+    <span style="font-size: 0.6em;">
+        <a href="/user/register" class="ml-5"><i class="fas fa-user-plus"></i> 회원가입</a>
+    </span>
 {% endblock %}
 {% block content %}
     <div class="row">
