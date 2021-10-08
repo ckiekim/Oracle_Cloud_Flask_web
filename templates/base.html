@@ -27,19 +27,19 @@
 
         <!-- Links -->
         <ul class="nav nav-pills mr-auto">
-            <li class="nav-item mr-4">
+            <li class="nav-item mr-3">
                 <a class="nav-link {% if menu.ho %}active{% endif %}" 
                    href="{% if menu.ho %}#{% else %}/{% endif %}">
                     <i class="fa fa-home"></i> Home
                 </a>
             </li>
-            <li class="nav-item mr-4">
+            <li class="nav-item mr-3">
                 <a class="nav-link {% if menu.bb %}active{% endif %}" 
                    href="{% if menu.bb %}#{% else %}/bbs/list/1{% endif %}">
                     <i class="far fa-list-alt"></i> 자유게시판
                 </a>
             </li>
-            <li class="nav-item mr-4">
+            <li class="nav-item mr-3">
                 <a class="nav-link {% if menu.us %}active{% endif %}" 
                    href="{% if menu.us %}#{% else %}/user/list/1{% endif %}">
                    <i class="fas fa-user-friends"></i> 사용자
@@ -182,8 +182,8 @@
                         <a class="nav-link dropdown-toggle {% if menu.nl %}active{% endif %}" 
                            data-toggle="dropdown" href="#">자연어</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/nat_lang/translate">번역기</a>
-                            <a class="dropdown-item" href="/nat_lang/tts">음성합성</a>
+                            <a class="dropdown-item" href="/nat_lang/translate">번역</a>
+                            <a class="dropdown-item" href="/nat_lang/tts">음성 합성</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/nat_lang/emotion">외국어 감성분석</a>
                         </div>
