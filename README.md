@@ -31,6 +31,11 @@ $ curl -O https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
 $ sudo bash Anaconda3-2021.05-Linux-x86_64.sh
 </pre>
 
+#### Flask 설치
+<pre>
+$ sudo pip install Flask
+</pre>
+
 #### 한글 폰트 설치
 <pre>
 $ wget http://cdn.naver.com/naver/NanumFont/fontfiles/NanumFont_TTF_ALL.zip
