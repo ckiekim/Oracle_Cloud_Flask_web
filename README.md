@@ -11,6 +11,7 @@
 
 ### Software Version
 - Anaconda3-2021.05 with python 3.8.8
+- Flask 1.1.2
 - MySQL 8.0.21
 - Bootstrap 4.6
 - jQuery 3.6, jQuery-ui 1.12.1
