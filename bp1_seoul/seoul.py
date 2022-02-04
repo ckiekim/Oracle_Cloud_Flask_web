@@ -124,17 +124,25 @@ def crime(option):
 
     map = folium.Map(location=[37.5502, 126.982], zoom_start=11)
     if option in ['crime', 'murder', 'rob', 'rape', 'thief', 'violence']:
-        map.choropleth(geo_data = geo_str, data = crime[option_dict[option]],
+        map.Choropleth(geo_data = geo_str, data = crime[option_dict[option]],
                columns = [crime.index, crime[option_dict[option]]],
-               fill_color = 'PuRd', key_on = 'feature.id')
+               fill_color = 'PuRd', key_on = 'feature.id').add_to(map)
     else:
-        map.choropleth(geo_data = geo_str, data = crime[option_dict[option]],
+        map.Choropleth(geo_data = geo_str, data = crime[option_dict[option]],
                columns = [crime.index, crime[option_dict[option]]],
-               fill_color = 'YlGnBu', key_on = 'feature.id')
+               fill_color = 'YlGnBu', key_on = 'feature.id').add_to(map)
         for i in police.index:
             folium.CircleMarker([police.lat[i], police.lng[i]], radius=10,
                                 tooltip=police['관서명'][i],
                                 color='crimson', fill_color='crimson').add_to(map)
+    gu_dict = mt.get_text_location(geo_str)
+    for gu_name in crime.index:
+        folium.map.Marker(
+            location=gu_dict[gu_name],
+            icon = DivIcon(icon_size=(80,20), icon_anchor=(20,0),
+                html=f'<div style="font-size: 10pt">{gu_name}</div>'
+            )
+        ).add_to(map)
 
     html_file = os.path.join(current_app.root_path, 'static/img/crime.html')
     map.save(html_file)
