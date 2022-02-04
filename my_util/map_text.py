@@ -1,3 +1,5 @@
+import numpy as np
+
 def get_text_location(geo_str):
     gu_dict = {}
     for gu in geo_str['features']:
