@@ -122,7 +122,7 @@ def crime(option):
                    'a_thief':'절도검거율', 'a_violence':'폭력검거율'}
     current_app.logger.debug(option_dict[option])
 
-    map = folium.Map(location=[37.5502, 126.982], zoom_start=11)
+    map = folium.Map(location=[37.5502, 126.982], zoom_start=11, tiles='Stamen Toner')
     if option in ['crime', 'murder', 'rob', 'rape', 'thief', 'violence']:
         folium.Choropleth(geo_data = geo_str, data = crime[option_dict[option]],
                columns = [crime.index, crime[option_dict[option]]],
