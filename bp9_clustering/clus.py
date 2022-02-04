@@ -19,12 +19,12 @@ def cluster():
     if request.method == 'GET':
         return render_template('cluster/cluster.html', menu=menu, weather=get_weather())
     else:
-        try:
+        ''' try:
             k_number = int(request.form['k_number'])
         except:
             flash('군집수를 입력하세요.')
-            return redirect(url_for('clus_bp.cluster'))
-
+            return redirect(url_for('clus_bp.cluster')) '''
+        k_number = int(request.form['k_number'])
         option = request.form['option']
         if option == 'direct':
             f_csv = request.files['csv']
