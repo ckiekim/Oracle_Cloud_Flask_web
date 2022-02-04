@@ -2,11 +2,13 @@ import logging
 from flask import Blueprint, render_template, request, session, g
 from flask import current_app
 import os, folium, json
+from folium.features import DivIcon
 import numpy as np
 import pandas as pd
 import matplotlib as mpl 
 import matplotlib.pyplot as plt
 from my_util.weather import get_weather
+import my_util.map_text as mt
 
 seoul_bp = Blueprint('seoul_bp', __name__)
 menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
@@ -87,9 +89,17 @@ def park_gu(option):
     column_index = option_dict[option].replace(' ','')
     
     map = folium.Map(location=[37.5502, 126.982], zoom_start=11, tiles='Stamen Toner')
-    map.choropleth(geo_data = geo_str, data = park_gu[column_index],
+    folium.Choropleth(geo_data = geo_str, data = park_gu[column_index],
                     columns = [park_gu.index, park_gu[column_index]],
-                    fill_color = 'PuRd', key_on = 'feature.id')
+                    fill_color = 'PuRd', key_on = 'feature.id').add_to(map)
+    gu_dict = mt.get_text_location(geo_str)
+    for gu_name in park_gu.index:
+        folium.map.Marker(
+            location=gu_dict[gu_name],
+            icon = DivIcon(icon_size=(80,20), icon_anchor=(20,0),
+                html=f'<div style="font-size: 10pt">{gu_name}</div>'
+            )
+        ).add_to(map)
     for i in park_new.index:
         folium.CircleMarker([park_new.lat[i], park_new.lng[i]], 
                         radius=int(park_new['size'][i]),
