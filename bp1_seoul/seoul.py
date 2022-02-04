@@ -124,11 +124,11 @@ def crime(option):
 
     map = folium.Map(location=[37.5502, 126.982], zoom_start=11)
     if option in ['crime', 'murder', 'rob', 'rape', 'thief', 'violence']:
-        map.Choropleth(geo_data = geo_str, data = crime[option_dict[option]],
+        folium.Choropleth(geo_data = geo_str, data = crime[option_dict[option]],
                columns = [crime.index, crime[option_dict[option]]],
                fill_color = 'PuRd', key_on = 'feature.id').add_to(map)
     else:
-        map.Choropleth(geo_data = geo_str, data = crime[option_dict[option]],
+        folium.Choropleth(geo_data = geo_str, data = crime[option_dict[option]],
                columns = [crime.index, crime[option_dict[option]]],
                fill_color = 'YlGnBu', key_on = 'feature.id').add_to(map)
         for i in police.index:
