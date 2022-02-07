@@ -10,12 +10,18 @@ import logging
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import my_util.general_util as gu
 from my_util.weather import get_weather
 
 aclsf_bp = Blueprint('aclsf_bp', __name__)
 menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
         'se':0, 'cg':0, 'cr':0, 'wc':0, 'rs':0,
         'cf':0, 'ac':1, 're':0, 'cu':0, 'nl':0}
+
+digits_max_index = 445
+mnist_max_index = 10487
+imdb_max_index = 6249
+naver_max_index = 48994
 
 @aclsf_bp.before_app_first_request
 def before_app_first_request():
@@ -40,7 +46,8 @@ def digits():
     if request.method == 'GET':
         return render_template('advanced/digits.html', menu=menu, weather=get_weather())
     else:
-        index = int(request.form['index'] or '0')
+        index = gu.get_index(request.form['index'], digits_max_index)
+        #index = int(request.form['index'] or '0')
         index_list = list(range(index, index+5))
         digits = load_digits()
         df = pd.read_csv('static/data/digits_test.csv')
@@ -79,7 +86,8 @@ def mnist():
     if request.method == 'GET':
         return render_template('advanced/mnist.html', menu=menu, weather=get_weather())
     else:
-        index = int(request.form['index'] or '0')
+        index = gu.get_index(request.form['index'], mnist_max_index)
+        #index = int(request.form['index'] or '0')
         index_list = list(range(index, index+3))
         df = pd.read_csv('static/data/mnist/mnist_test.csv')
 
@@ -112,7 +120,8 @@ def imdb():
     else:
         test_data = []
         if request.form['option'] == 'index':
-            index = int(request.form['index'] or '0')
+            index = gu.get_index(request.form['index'], imdb_max_index)
+            #index = int(request.form['index'] or '0')
             df_test = pd.read_csv('static/data/IMDB_test.csv')
             test_data.append(df_test.iloc[index, 0])
             label = '긍정' if df_test.sentiment[index] else '부정'
@@ -134,7 +143,8 @@ def naver():
         return render_template('advanced/naver.html', menu=menu, weather=get_weather())
     else:
         if request.form['option'] == 'index':
-            index = int(request.form['index'] or '0')
+            index = gu.get_index(request.form['index'], naver_max_index)
+            #index = int(request.form['index'] or '0')
             df_test = pd.read_csv('static/data/naver/movie_test.tsv', sep='\t')
             org_review = df_test.document[index]
             label = '긍정' if df_test.label[index] else '부정'

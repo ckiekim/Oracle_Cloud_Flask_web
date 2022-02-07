@@ -5,6 +5,7 @@ import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import my_util.general_util as gu
 from my_util.weather import get_weather
 
 rgrs_bp = Blueprint('rgrs_bp', __name__)
@@ -12,12 +13,17 @@ menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
         'se':0, 'cg':0, 'cr':0, 'wc':0, 'rs':0,
         'cf':0, 'ac':0, 're':1, 'cu':0, 'nl':0}
 
+diabetes_max_index = 110
+iris_max_index = 37
+boston_max_index = 126
+
 @rgrs_bp.route('/diabetes', methods=['GET', 'POST'])
 def diabetes():
     if request.method == 'GET':
         return render_template('regression/diabetes.html', menu=menu, weather=get_weather())
     else:
-        index = int(request.form['index'] or '0')
+        index = gu.get_index(request.form['index'], diabetes_max_index)
+        #index = int(request.form['index'] or '0')
         feature = request.form['feature']
         df = pd.read_csv('static/data/diabetes_train.csv')
         X = df[feature].values.reshape(-1,1)
@@ -54,7 +60,8 @@ def iris():
     if request.method == 'GET':
         return render_template('regression/iris.html', menu=menu, weather=get_weather())
     else:
-        index = int(request.form['index'] or '0')
+        index = gu.get_index(request.form['index'], iris_max_index)
+        #index = int(request.form['index'] or '0')
         feature_name = request.form['feature']
         column_dict = {'sl':'Sepal length', 'sw':'Sepal width', 
                        'pl':'Petal length', 'pw':'Petal width', 
@@ -91,7 +98,8 @@ def boston():
         return render_template('regression/boston.html', feature_list=feature_list,
                                menu=menu, weather=get_weather())
     else:
-        index = int(request.form['index'] or '0')
+        index = gu.get_index(request.form['index'], boston_max_index)
+        #index = int(request.form['index'] or '0')
         feature_list = request.form.getlist('feature')
         if len(feature_list) == 0:
             feature_list = ['RM', 'LSTAT']

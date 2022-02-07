@@ -2,12 +2,16 @@ from flask import Blueprint, render_template, request, session
 from flask import current_app, redirect, url_for, flash
 import pandas as pd
 import my_util.rcmd_util as mr
+import my_util.general_util as gu
 from my_util.weather import get_weather
 
 rcmd_bp = Blueprint('rcmd_bp', __name__)
 menu = {'ho':0, 'bb':0, 'us':0, 'li':0, 
         'se':0, 'cg':0, 'cr':0, 'wc':0, 'rs':1,
         'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
+
+movie_max_index = 9999
+book_max_index = 2380
 
 @rcmd_bp.route('/movie', methods=['GET', 'POST'])
 def movie():
@@ -27,7 +31,8 @@ def movie_res():
     if kind == 'list':
         index = int(request.form['list'])
     elif kind == 'index':
-        index = int(request.form['index'])
+        index = gu.get_index(request.form['index'], movie_max_index)
+        #index = int(request.form['index'] or '0')
     else:
         title = request.form['title']
         index = mr.get_movie_index(title)
@@ -51,7 +56,8 @@ def book():
         if kind == 'list':
             index = int(request.form['list'])
         elif kind == 'index':
-            index = int(request.form['index'])
+            index = gu.get_index(request.form['index'], book_max_index)
+            #index = int(request.form['index'] or '0')
         else:
             title = request.form['title']
             index = mr.get_book_index(title)
