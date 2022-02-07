@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 import matplotlib as mpl 
 import matplotlib.pyplot as plt
+import my_util.general_util as gu
 from my_util.weather import get_weather
-import my_util.map_text as mt
 
 seoul_bp = Blueprint('seoul_bp', __name__)
 menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
@@ -92,7 +92,7 @@ def park_gu(option):
     folium.Choropleth(geo_data = geo_str, data = park_gu[column_index],
                     columns = [park_gu.index, park_gu[column_index]],
                     fill_color = 'PuRd', key_on = 'feature.id').add_to(map)
-    gu_dict = mt.get_text_location(geo_str)
+    gu_dict = gu.get_text_location(geo_str)
     for gu_name in park_gu.index:
         folium.map.Marker(
             location=gu_dict[gu_name],
@@ -135,7 +135,7 @@ def crime(option):
             folium.CircleMarker([police.lat[i], police.lng[i]], radius=10,
                                 tooltip=police['관서명'][i],
                                 color='crimson', fill_color='crimson').add_to(map)
-    gu_dict = mt.get_text_location(geo_str)
+    gu_dict = gu.get_text_location(geo_str)
     for gu_name in crime.index:
         folium.map.Marker(
             location=gu_dict[gu_name],
