@@ -8,7 +8,7 @@ from my_util.wordCloud import engCloud, hanCloud
 cloud_bp = Blueprint('cloud_bp', __name__)
 menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
         'se':0, 'cg':0, 'cr':0, 'wc':1, 'rs':0,
-        'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
+        'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0, 'st':0}
 
 @cloud_bp.route('/han/gift')
 def gift():

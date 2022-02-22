@@ -8,7 +8,7 @@ import my_util.drawKorea as dk
 carto_bp = Blueprint('carto_bp', __name__)
 menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
         'se':0, 'cg':1, 'cr':0, 'wc':0, 'rs':0,
-        'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0}
+        'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0, 'st':0}
 
 @carto_bp.route('/pop/<option>')
 def population(option):
