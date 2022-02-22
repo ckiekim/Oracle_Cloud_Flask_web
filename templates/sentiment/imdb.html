@@ -9,25 +9,27 @@
         <div class="col-11">
             <form action="/sentiment/imdb" method="post">
                 <table class="table table-borderless">
-                    <tr>
-                        <td>
+                    <tr class="d-flex">
+                        <td class="col-3">
                             <div class="form-check-inline">
                                 <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" id="option1" name="option" value="index" checked><label for="index">테스트 데이터셋 인덱스</label>
+                                    <input type="radio" class="form-check-input" id="option1" name="option" value="index" checked><label for="index">테스트셋 인덱스</label>
                                 </label>
                             </div>
                         </td>
-                        <td><input type="text" class="form-control" id="index" name="index" placeholder="0 ~ 6,249 사이의 값"></td>
+                        <td class="col-9">
+                            <input type="text" class="form-control" id="index" name="index" placeholder="0 ~ 6,249 사이의 값">
+                        </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="d-flex">
+                        <td class="col-3">
                             <div class="form-check-inline">
                                 <label class="form-check-label">
                                     <input type="radio" class="form-check-input" id="option2" name="option" value="review"><label for="review">리뷰 입력</label>
                                 </label>
                             </div>
                         </td>
-                        <td>
+                        <td class="col-9>
                             <textarea name="review" id="review" cols="80" rows="5"></textarea>
                         </td>
                     </tr>

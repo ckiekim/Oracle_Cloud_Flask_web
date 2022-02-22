@@ -9,6 +9,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import my_util.general_util as gu
 from my_util.weather import get_weather
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 senti_bp = Blueprint('senti_bp', __name__)
 menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
@@ -17,6 +18,7 @@ menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
 
 imdb_max_index = 6249
 naver_max_index = 48994
+imdb_lexicon_max_index = 24999
 
 class Okt():
     def morphs(self):
@@ -82,3 +84,26 @@ def naver():
         return render_template('sentiment/naver_res.html', menu=menu, review=org_review,
                                 res=result_dict, weather=get_weather())
 
+@senti_bp.route('/imdb_lexicon', methods=['GET', 'POST'])
+def imdb_lexicon():
+    if request.method == 'GET':
+        return render_template('sentiment/imdb_lexicon.html', menu=menu, weather=get_weather())
+    else:
+        threshold=int(request.form['threshold']) * 0.01
+        senti_analyzer = SentimentIntensityAnalyzer()
+        if request.form['option'] == 'index':
+            index = gu.get_index(request.form['index'], imdb_lexicon_max_index)
+            df = pd.read_csv('static/data/IMDBdata.tsv', sep='\t', quoting=3)
+            review = df.review[index].replace('<br />',' ')
+            review = re.sub('[^A-Za-z]',' ',review).strip()
+            label = '긍정' if df.sentiment[index] == 1 else '부정'
+        else:
+            review = request.form['review']
+            label = '직접 확인'
+
+        score = senti_analyzer.polarity_scores(review)
+        result = '긍정' if score['compound'] >= threshold else '부정'
+        result_dict = {'label':label, 'vader_res':result, 'threshold':threshold}
+        return render_template('sentiment/imdb_lexicon_res.html', menu=menu, 
+                               review=df.review[index] if request.form['option'] == 'index' else review,
+                               res=result_dict, weather=get_weather())
