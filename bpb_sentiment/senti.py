@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, session, g
 from flask import current_app, redirect, url_for
 from sklearn.datasets import load_digits
-#from konlpy.tag import Okt
+from konlpy.tag import Okt
 import os, re, joblib
 import logging
 import numpy as np
@@ -20,10 +20,6 @@ spam_max_index = 1292
 imdb_max_index = 6249
 naver_max_index = 48994
 imdb_lexicon_max_index = 24999
-
-class Okt():
-    def morphs(self):
-        pass
 
 @senti_bp.route('/spam', methods=['GET', 'POST'])
 def spam():
