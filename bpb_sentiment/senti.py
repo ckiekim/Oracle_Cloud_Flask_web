@@ -16,6 +16,7 @@ menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
         'se':0, 'cg':0, 'cr':0, 'wc':0, 'rs':0,
         'cf':0, 'ac':0, 're':0, 'cu':0, 'nl':0, 'st':1}
 
+spam_max_index = 1292
 imdb_max_index = 6249
 naver_max_index = 48994
 imdb_lexicon_max_index = 24999
@@ -23,6 +24,29 @@ imdb_lexicon_max_index = 24999
 class Okt():
     def morphs(self):
         pass
+
+@senti_bp.route('/spam', methods=['GET', 'POST'])
+def spam():
+    if request.method == 'GET':
+        return render_template('sentiment/spam.html', menu=menu, weather=get_weather())
+    else:
+        if request.form['option'] == 'index':
+            index = gu.get_index(request.form['index'], spam_max_index)
+            df_test = pd.read_csv('static/data/spam_test.csv')
+            content = df_test.content[index]
+            label = '스팸' if df_test.label[index] else '정상'
+        else:
+            content = request.form['content']
+            label = '직접 확인'
+
+        test_data = [re.sub('[^A-Za-z0-9]',' ',content).strip().lower()]
+        spam_count_nb = joblib.load('static/model/spam_count_nb.pkl')
+        spam_tfidf_lr = joblib.load('static/model/spam_tfidf_lr.pkl')
+        pred_cn = '스팸' if spam_count_nb.predict(test_data)[0] else '정상'
+        pred_tl = '스팸' if spam_tfidf_lr.predict(test_data)[0] else '정상'
+        result_dict = {'label':label, 'pred_cn':pred_cn, 'pred_tl':pred_tl}
+        return render_template('sentiment/spam_res.html', menu=menu, content=content,
+                                res=result_dict, weather=get_weather())
 
 @senti_bp.route('/imdb', methods=['GET', 'POST'])
 def imdb():
