@@ -19,7 +19,7 @@ menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
 
 digits_max_index = 445
 mnist_max_index = 10487
-news_max_index = 5547
+news_max_index = 4438
 
 @aclsf_bp.before_app_first_request
 def before_app_first_request():

@@ -24,7 +24,7 @@ df_test.to_csv('../static/data/news/test.csv', index=False) '''
 
 X_train, X_test, y_train, y_test = train_test_split(
     df_train.data.values, df_train.target.values, stratify=df_train.target.values,
-    test_size=0.5, random_state=2022
+    test_size=0.4, random_state=2022
 )
 print(X_train.shape, X_test.shape)
 print(np.unique(y_train, return_counts=True))
@@ -33,14 +33,14 @@ df_test = pd.DataFrame(X_test, columns=['data'])
 df_test['target'] = y_test
 df_test.to_csv('../static/data/news/test.csv', index=False)
 
-# Case 1. CountVectorizer + LogisticRegression
+# Case 1. CountVectorizer + SVC
 pipeline = Pipeline([
     ('count_vect', CountVectorizer(stop_words='english', max_df=700, ngram_range=(1,1))),
     ('sv_clf', SVC(C=10))
 ])
 pipeline.fit(X_train, y_train)
 joblib.dump(pipeline, '../static/model/news_count_sv.pkl')
-print('Case 1. CountVectorizer + LogisticRegression done.')
+print('Case 1. CountVectorizer + SVC done.')
 
 # Case 2. TfidfVecorizer + SVC
 pipeline = Pipeline([
