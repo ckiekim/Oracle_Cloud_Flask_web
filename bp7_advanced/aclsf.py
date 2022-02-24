@@ -113,7 +113,7 @@ def mnist():
                                 result=result_dict, weather=get_weather())
 
 
-''' @aclsf_bp.route('/news', methods=['GET', 'POST'])
+@aclsf_bp.route('/news', methods=['GET', 'POST'])
 def news():
     target_names = ['alt.atheism', 'comp.graphics', 'comp.os.ms-windows.misc',
                     'comp.sys.ibm.pc.hardware', 'comp.sys.mac.hardware', 'comp.windows.x',
@@ -142,7 +142,7 @@ def news():
                        'pred_t_sv':f'{pred_t_sv[0]} ({target_names[pred_t_sv[0]]})'}
         
         return render_template('advanced/news_res.html', menu=menu, news=df.data[index],
-                                res=result_dict, weather=get_weather()) '''
+                                res=result_dict, weather=get_weather())
 
 @aclsf_bp.route('/image', methods=['GET', 'POST'])
 def image():
