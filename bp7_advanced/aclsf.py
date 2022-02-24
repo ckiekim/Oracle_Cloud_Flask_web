@@ -19,8 +19,7 @@ menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
 
 digits_max_index = 445
 mnist_max_index = 10487
-imdb_max_index = 6249
-naver_max_index = 48994
+news_max_index = 5547
 
 @aclsf_bp.before_app_first_request
 def before_app_first_request():
@@ -124,21 +123,18 @@ def news():
     if request.method == 'GET':
         return render_template('advanced/news.html', menu=menu, weather=get_weather())
     else:
-        index = int(request.form['index'] or '0')
+        index = gu.get_index(request.form['index'], news_max_index)
         df = pd.read_csv('static/data/news/test.csv')
         label = f'{df.target[index]} ({target_names[df.target[index]]})'
         test_data = []
         test_data.append(df.data[index])
 
-        news_count_lr = joblib.load('static/model/news_count_lr.pkl')
-        news_tfidf_lr = joblib.load('static/model/news_tfidf_lr.pkl')
+        news_count_sv = joblib.load('static/model/news_count_sv.pkl')
         news_tfidf_sv = joblib.load('static/model/news_tfidf_sv.pkl')
-        pred_c_lr = news_count_lr.predict(test_data)
-        pred_t_lr = news_tfidf_lr.predict(test_data)
+        pred_c_sv = news_count_sv.predict(test_data)
         pred_t_sv = news_tfidf_sv.predict(test_data)
         result_dict = {'index':index, 'label':label, 
-                       'pred_c_lr':f'{pred_c_lr[0]} ({target_names[pred_c_lr[0]]})',
-                       'pred_t_lr':f'{pred_t_lr[0]} ({target_names[pred_t_lr[0]]})',
+                       'pred_c_sv':f'{pred_c_sv[0]} ({target_names[pred_c_sv[0]]})',
                        'pred_t_sv':f'{pred_t_sv[0]} ({target_names[pred_t_sv[0]]})'}
         
         return render_template('advanced/news_res.html', menu=menu, news=df.data[index],

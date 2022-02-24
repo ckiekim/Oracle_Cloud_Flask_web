@@ -24,7 +24,7 @@ df_test.to_csv('../static/data/news/test.csv', index=False) '''
 
 X_train, X_test, y_train, y_test = train_test_split(
     df_train.data.values, df_train.target.values, stratify=df_train.target.values,
-    test_size=0.4, random_state=2022
+    test_size=0.5, random_state=2022
 )
 print(X_train.shape, X_test.shape)
 print(np.unique(y_train, return_counts=True))
@@ -35,27 +35,18 @@ df_test.to_csv('../static/data/news/test.csv', index=False)
 
 # Case 1. CountVectorizer + LogisticRegression
 pipeline = Pipeline([
-    ('count_vect', CountVectorizer(stop_words='english', max_df=300, ngram_range=(1,2))),
-    ('lr_clf', LogisticRegression(C=1, max_iter=300))
+    ('count_vect', CountVectorizer(stop_words='english', max_df=700, ngram_range=(1,1))),
+    ('sv_clf', SVC(C=10))
 ])
 pipeline.fit(X_train, y_train)
-joblib.dump(pipeline, '../static/model/news_count_lr.pkl')
+joblib.dump(pipeline, '../static/model/news_count_sv.pkl')
 print('Case 1. CountVectorizer + LogisticRegression done.')
 
-# Case 2. TfidfVecorizer + LogisticRegression
+# Case 2. TfidfVecorizer + SVC
 pipeline = Pipeline([
-    ('tfidf_vect', TfidfVectorizer(stop_words='english', max_df=700, ngram_range=(1,2))),
-    ('lr_clf', LogisticRegression(C=10, max_iter=300))
-])
-pipeline.fit(X_train, y_train)
-joblib.dump(pipeline, '../static/model/news_tfidf_lr.pkl')
-print('Case 2. TfidfVecorizer + LogisticRegression done.')
-
-# Case 3. TfidfVecorizer + SVC
-pipeline = Pipeline([
-    ('tfidf_vect', TfidfVectorizer(stop_words='english', max_df=300, ngram_range=(1,1))),
+    ('tfidf_vect', TfidfVectorizer(stop_words='english', max_df=700, ngram_range=(1,1))),
     ('sv_clf', SVC(C=10))
 ])
 pipeline.fit(X_train, y_train)
 joblib.dump(pipeline, '../static/model/news_tfidf_sv.pkl')
-print('Case 3. TfidfVecorizer + SVC done.')
+print('Case 2. TfidfVecorizer + SVC done.')
