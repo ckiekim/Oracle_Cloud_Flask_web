@@ -1,5 +1,6 @@
-import requests
+import requests, time
 from urllib.parse import quote
+from selenium import webdriver
 from bs4 import BeautifulSoup
 from flask import current_app
 import pandas as pd
@@ -74,5 +75,34 @@ def interpark():
                           'company':company, 'price':price, 'href':href, 'img':img})
     return book_list
 
+def convert_unit(s):
+    s = s.replace('억', '').replace('개','').replace(',','')
+    s = s.replace('만', '0000')
+    return f'{int(s):,d}'
+
 def youtube():
-    pass
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')   # 화면없이 실행
+    options.add_argument('--no-sandbox')
+    options.add_argument("--single-process")
+    options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome('chromedriver', options=options)
+    
+    url = 'https://youtube-rank.com/board/bbs/board.php?bo_table=youtube&page=1'
+    driver.get(url)
+    time.sleep(2)
+    
+    html = driver.page_source
+    soup = BeautifulSoup(html, 'html.parser')
+    channel_list = soup.select('.aos-init')
+    results = []
+    for channel in channel_list:
+        rank = channel.select_one('.rank').text.strip()
+        category = channel.select_one('p.category').get_text().strip(' \n[]')
+        name = channel.select_one('.subject a').text.strip()
+        subscriber = convert_unit(channel.select_one('.subscriber_cnt').text)
+        view = convert_unit(channel.select_one('.view_cnt').text)
+        video = convert_unit(channel.select_one('.video_cnt').text)
+        results.append({'rank':rank, 'category':category, 'name':name, 
+                        'subscriber':subscriber, 'view':view, 'video':video})
+    return results
