@@ -73,3 +73,6 @@ def interpark():
         book_list.append({'rank':rank, 'title':title, 'author':author,
                           'company':company, 'price':price, 'href':href, 'img':img})
     return book_list
+
+def youtube():
+    pass
