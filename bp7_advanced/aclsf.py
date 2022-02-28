@@ -4,7 +4,7 @@ from sklearn.datasets import load_digits
 from tensorflow.keras.applications.resnet50 import ResNet50, decode_predictions
 from PIL import Image, ImageDraw, ImageFont
 import os, joblib
-import urllib3, json, base64
+import requests, urllib3, json, base64
 import logging
 import numpy as np
 import pandas as pd
@@ -20,6 +20,13 @@ menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
 digits_max_index = 445
 mnist_max_index = 10487
 news_max_index = 4438
+max_image_size = 2048
+max_image_len = 2 ** 21
+
+''' class ResNet50():
+    pass
+def decode_predictions():
+    pass '''
 
 @aclsf_bp.before_app_first_request
 def before_app_first_request():
@@ -159,6 +166,61 @@ def image():
                                name=label[1], prob=np.round(label[2]*100, 2),
                                filename=f_img.filename, mtime=mtime)    
 
+# 카카오 비전 Open API - 얼굴 검출
+@aclsf_bp.route('/face', methods=['GET', 'POST'])
+def face():
+    if request.method == 'GET':
+        return render_template('advanced/face.html', menu=menu, weather=get_weather())
+    else:
+        f_img = request.files['image']
+        file_img = os.path.join(current_app.root_path, 'static/upload/') + f_img.filename
+        f_img.save(file_img)
+        _, image_type = os.path.splitext(f_img.filename)
+        if image_type[1:] not in ['png', 'jpg']:
+            return redirect(url_for('aclsf_bp.face'))
+        img = Image.open(file_img)
+        if sum(img.size) > max_image_size or len(img.tobytes()) > max_image_len:
+            return redirect(url_for('aclsf_bp.face'))
+        current_app.logger.debug(f"{f_img.filename}, {image_type}, {img.size}")
+        print(f"{file_img}, {image_type[1:]}, {img.size}")
+        
+        with open('static/keys/kakaoaikey.txt') as file:
+            kakao_key = file.read()
+        url = 'https://dapi.kakao.com/v2/vision/face/detect'
+        headers = {"Authorization": f'KakaoAK {kakao_key}'}
+        files = {'image': open(file_img, 'rb')}
+        result = requests.post(url, headers=headers, files=files)
+        if result.status_code != 200:
+            return redirect(url_for('aclsf_bp.face'))
+            
+        res = result.json()
+        faces = res['result']['faces']
+        width, height = img.size
+        draw = ImageDraw.Draw(img)
+        for i in range(len(faces)):
+            face = faces[i]
+            x = int(face['x']*width)
+            w = int(face['w']*width)
+            y = int(face['y']*height)
+            h = int(face['h']*height)
+            draw.rectangle(((x, y), (x+w, y+h)), outline='green', width=2)
+            text = 'M' if face['facial_attributes']['gender']['male'] > 0.5 else 'F'
+            text += str(int(float(faces[i]['facial_attributes']['age']+0.5)))
+            draw.text((x+10, y-20), text, font=ImageFont.truetype("arial.ttf", 20), fill=(0,255,0))
+            for key in face['facial_points'].keys():
+                for part in face['facial_points'][key]:
+                    x = int(float(part[0]) * width)
+                    y = int(float(part[1]) * height)
+                    draw.ellipse((x-2, y-2, x+2, y+2), fill='white', outline='white')
+        
+        face_img = os.path.join(current_app.root_path, 'static/img/face.'+image_type)
+        img.save(face_img)
+        mtime = int(os.stat(face_img).st_mtime)
+        return render_template('advanced/face_res.html', menu=menu, weather=get_weather(),
+                               filename='face.'+image_type, mtime=mtime)
+        
+
+# 국내 서버에서는 이용가능하나 해외 서버에서는 사용 불가
 @aclsf_bp.route('/detect', methods=['GET', 'POST'])
 def detect():
     if request.method == 'GET':
@@ -173,7 +235,7 @@ def detect():
 
         # 공공 인공지능 Open API - 객체 검출
         with open('static/keys/etri_ai_key.txt') as kfile:
-            eai_key = kfile.read(100)
+            eai_key = kfile.read()
         with open(file_img, 'rb') as file:
             image_contents = base64.b64encode(file.read()).decode('utf8')
         openApiURL = "http://aiopen.etri.re.kr:8000/ObjectDetect"
