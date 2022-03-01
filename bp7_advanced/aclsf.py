@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, session, g
 from flask import current_app, redirect, url_for
 from sklearn.datasets import load_digits
-from tensorflow.keras.applications.resnet50 import ResNet50, decode_predictions
+#from tensorflow.keras.applications.resnet50 import ResNet50, decode_predictions
 from PIL import Image, ImageDraw, ImageFont
 import os, joblib
 import requests, urllib3, json, base64
@@ -23,10 +23,10 @@ news_max_index = 4438
 max_image_size = 2048
 max_image_len = 2 ** 21
 
-''' class ResNet50():
+class ResNet50():
     pass
 def decode_predictions():
-    pass '''
+    pass
 
 @aclsf_bp.before_app_first_request
 def before_app_first_request():
@@ -118,7 +118,6 @@ def mnist():
         return render_template('advanced/mnist_res.html', menu=menu, mtime=mtime,
                                 result=result_dict, weather=get_weather())
 
-
 @aclsf_bp.route('/news', methods=['GET', 'POST'])
 def news():
     target_names = ['alt.atheism', 'comp.graphics', 'comp.os.ms-windows.misc',
@@ -182,7 +181,6 @@ def face():
         if sum(img.size) > max_image_size or len(img.tobytes()) > max_image_len:
             return redirect(url_for('aclsf_bp.face'))
         current_app.logger.debug(f"{f_img.filename}, {image_type}, {img.size}")
-        print(f"{file_img}, {image_type[1:]}, {img.size}")
         
         with open('static/keys/kakaoaikey.txt') as file:
             kakao_key = file.read()
@@ -213,11 +211,49 @@ def face():
                     y = int(float(part[1]) * height)
                     draw.ellipse((x-2, y-2, x+2, y+2), fill='white', outline='white')
         
-        face_img = os.path.join(current_app.root_path, 'static/img/face.'+image_type)
+        face_img = os.path.join(current_app.root_path, 'static/img/face'+image_type)
         img.save(face_img)
         mtime = int(os.stat(face_img).st_mtime)
         return render_template('advanced/face_res.html', menu=menu, weather=get_weather(),
-                               filename='face.'+image_type, mtime=mtime)
+                               filename='face'+image_type, mtime=mtime)
+
+# 카카오 비전 Open API - 문자 인식(OCR)
+@aclsf_bp.route('/ocr', methods=['GET', 'POST'])
+def ocr():
+    if request.method == 'GET':
+        return render_template('advanced/ocr.html', menu=menu, weather=get_weather())
+    else:
+        f_img = request.files['image']
+        file_img = os.path.join(current_app.root_path, 'static/upload/') + f_img.filename
+        f_img.save(file_img)
+        _, image_type = os.path.splitext(f_img.filename)
+        img = Image.open(file_img)
+        current_app.logger.debug(f"{f_img.filename}, {image_type}, {img.size}")
+        
+        with open('static/keys/kakaoaikey.txt') as file:
+            kakao_key = file.read()
+        url = 'https://dapi.kakao.com/v2/vision/text/ocr'
+        headers = {"Authorization": f'KakaoAK {kakao_key}'}
+        files = {'image': open(file_img, 'rb')}
+        result = requests.post(url, headers=headers, files=files)
+        if result.status_code != 200:
+            return redirect(url_for('aclsf_bp.ocr'))
+            
+        res = result.json()
+        texts = []
+        draw = ImageDraw.Draw(img)
+        for obj in res['result']:
+            try:
+                draw.rectangle((tuple(obj['boxes'][0]), tuple(obj['boxes'][2])), outline='green', width=3)
+            except:
+                draw.rectangle((tuple(obj['boxes'][0]), tuple(obj['boxes'][2])), width=5)
+            texts.append(obj['recognition_words'][0])
+        
+        ocr_img = os.path.join(current_app.root_path, 'static/img/ocr'+image_type)
+        img.save(ocr_img)
+        mtime = int(os.stat(ocr_img).st_mtime)
+        return render_template('advanced/ocr_res.html', menu=menu, weather=get_weather(),
+                               texts=', '.join(texts), filename='ocr'+image_type, mtime=mtime)
 
 # 국내 서버에서는 이용가능하나 해외 서버에서는 사용 불가
 @aclsf_bp.route('/detect', methods=['GET', 'POST'])
