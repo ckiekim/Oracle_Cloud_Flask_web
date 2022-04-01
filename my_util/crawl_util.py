@@ -46,9 +46,12 @@ def genie():
             rank += f'<br><small><span style="color: red;">▲{last[:-2]}</span></small>'
         else:
             rank += f'<br><small><span style="color: blue;">▼{last[:-2]}</span></small>'
-        title = tr.select_one('a.title').string.strip()
+        ''' title = tr.select_one('a.title').string.strip()
         artist = tr.select_one('a.artist').string
-        album = tr.select_one('a.albumtitle').string
+        album = tr.select_one('a.albumtitle').string '''
+        title = tr.select_one('.title.ellipsis').get_text().strip()
+        artist = tr.select_one('.artist.ellipsis').get_text().strip()
+        album = tr.select_one('.albumtitle.ellipsis').get_text().strip()
         img = 'https:' + tr.select_one('a.cover').find('img').attrs['src']
         music_list.append({'index':index, 'rank':rank, 'title':title, 'artist':artist,
                             'album':album, 'img':img})
