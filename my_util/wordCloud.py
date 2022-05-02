@@ -30,7 +30,7 @@ def engCloud(text, stop_words, mask_file, img_file, max_words=1000):
     plt.savefig(img_file)
 
 def hanCloud(text, stop_words, mask_file, img_file):
-    mpl.rc('font', family='NanumGothic')
+    mpl.rc('font', family='Malgun Gothic')
     mpl.rc('axes', unicode_minus=False)
     okt = Okt()
     tokens = okt.nouns(text)
@@ -43,13 +43,15 @@ def hanCloud(text, stop_words, mask_file, img_file):
     data = han_text.vocab().most_common(300)
     index = random.randint(0,5)
     if mask_file == None:
-        wc = WordCloud(font_path='/usr/share/fonts/NanumFont_TTF_ALL/NanumGothic.ttf',
+        wc = WordCloud(#font_path='/usr/share/fonts/NanumFont_TTF_ALL/NanumGothic.ttf',
+                        font_path='c:/Windows/Fonts/malgun.ttf',
                         width=800, height=800, colormap=palettes[index], 
                         relative_scaling = 0.2, background_color='black',
                         ).generate_from_frequencies(dict(data))
     else:
         mask = np.array(Image.open(mask_file))
-        wc = WordCloud(font_path='/usr/share/fonts/NanumFont_TTF_ALL/NanumGothic.ttf',
+        wc = WordCloud(#font_path='/usr/share/fonts/NanumFont_TTF_ALL/NanumGothic.ttf',
+                        font_path='c:/Windows/Fonts/malgun.ttf',
                         width=800, height=800, colormap='autumn', 
                         relative_scaling = 0.2, mask=mask,
                         background_color='white',
