@@ -24,7 +24,7 @@ def gift():
     """
     stop_words = stoptext.split()
     img_file = os.path.join(current_app.root_path, 'static/img/text.png')
-    with open(textfile) as fp:
+    with open(textfile, encoding='utf-8') as fp:
         text = fp.read()
     hanCloud(text, stop_words, maskfile, img_file)
     mtime = int(os.stat(img_file).st_mtime)
