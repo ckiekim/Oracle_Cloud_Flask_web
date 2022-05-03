@@ -12,6 +12,8 @@
 ### Software Version
 - Anaconda3-2021.05 with python 3.8.8
 - Flask 1.1.2
+- Surprise 1.1.1
+- Folium 0.12.1.post1
 - MySQL 8.0.21
 - Bootstrap 4.6
 - jQuery 3.6, jQuery-ui 1.12.1
@@ -31,9 +33,12 @@ $ curl -O https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
 $ sudo bash Anaconda3-2021.05-Linux-x86_64.sh
 </pre>
 
-#### Flask 설치
+#### Flask, Surprise, Folium, wordcloud 설치
 <pre>
 $ sudo pip install Flask
+$ sudo pip install scikit-surprise
+$ sudo pip install folium
+$ sudo pip install wordcloud
 </pre>
 
 #### 한글 폰트 설치
@@ -42,11 +47,6 @@ $ wget http://cdn.naver.com/naver/NanumFont/fontfiles/NanumFont_TTF_ALL.zip
 $ unzip NanumFont_TTF_ALL.zip -d NanumFont
 $ sudo mv NanumFont /usr/share/fonts
 $ sudo fc-cache -fv
-</pre>
-
-#### wordcloud 설치
-<pre>
-$ sudo pip install wordcloud
 </pre>
 
 #### Chrome driver and Selenium 설치

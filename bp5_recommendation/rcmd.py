@@ -95,10 +95,10 @@ def ml_latest():
         rcmd_list = []
         for pred in predictions[:10]:
             mid = int(pred.iid)
-            rating = pred.est
+            rating = round(pred.est, 4)
             title = mdf[mdf.movieId == mid]['title'].values[0]
             genre = mdf[mdf.movieId == mid]['genres'].values[0]
             genre = ', '.join(genre.split('|'))
-            rcmd_list.append({'title':title, 'genre':genre, 'rating':round(rating,4)})
+            rcmd_list.append({'id':mid, 'title':title, 'genre':genre, 'rating':rating})
         return render_template('rcmd/ml_latest_res.html', menu=menu, weather=get_weather(),
                                 uid=uid, movie_list=rcmd_list)
