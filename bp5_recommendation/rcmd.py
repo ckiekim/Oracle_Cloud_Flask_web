@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, session
 from flask import current_app, redirect, url_for, flash
+import joblib
 import pandas as pd
 import my_util.rcmd_util as mr
 import my_util.general_util as gu
@@ -12,6 +13,8 @@ menu = {'ho':0, 'bb':0, 'us':0, 'li':0,
 
 movie_max_index = 9999
 book_max_index = 2380
+ml_latest_max_index = 610
+ml_latest_min_index = 1
 
 @rcmd_bp.route('/movie', methods=['GET', 'POST'])
 def movie():
@@ -71,3 +74,31 @@ def book():
         book_list.append([df.image_link[i], df.title[i], df.author[i], df.genre[i]])
     return render_template('rcmd/book_res.html', menu=menu, weather=get_weather(),
                             book_list=book_list)
+
+def sortkey_est(pred):
+    return pred.est
+
+@rcmd_bp.route('/ml_latest', methods=['GET', 'POST'])
+def ml_latest():
+    if request.method == 'GET':
+        return render_template('rcmd/ml_latest.html', menu=menu, weather=get_weather())
+    else:
+        rdf = pd.read_csv('static/data/ml-latest/ratings.csv')
+        mdf = pd.read_csv('static/data/ml-latest/movies.csv')
+        model = joblib.load('static/model/movie-surprise.pkl')
+        uid = gu.get_index(request.form['index'], ml_latest_max_index, ml_latest_min_index)
+        seen_movies = rdf[rdf.userId == uid]['movieId'].tolist()
+        total_movies = mdf.movieId.tolist()
+        unseen_movies = [movie for movie in total_movies if movie not in seen_movies]
+        predictions = [model.predict(str(uid), str(mid)) for mid in unseen_movies]
+        predictions.sort(key=sortkey_est, reverse=True)
+        rcmd_list = []
+        for pred in predictions[:10]:
+            mid = int(pred.iid)
+            rating = pred.est
+            title = mdf[mdf.movieId == mid]['title'].values[0]
+            genre = mdf[mdf.movieId == mid]['genres'].values[0]
+            genre = ', '.join(genre.split('|'))
+            rcmd_list.append({'title':title, 'genre':genre, 'rating':round(rating,4)})
+        return render_template('rcmd/ml_latest_res.html', menu=menu, weather=get_weather(),
+                                uid=uid, movie_list=rcmd_list)

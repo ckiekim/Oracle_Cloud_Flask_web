@@ -10,15 +10,15 @@ def get_text_location(geo_str):
     return gu_dict
 
 # used in rcmd.py, clsf.py, aclsf.py, rgrs.py
-def get_index(index_str, upper):
+def get_index(index_str, upper, lower=0):
     if not index_str:               # 입력값이 없는 경우
-        return 0
+        return lower
     
     try:                            # 숫자를 입력하지 않은 경우
         index = int(index_str)
     except:
-        return 0
+        return lower
     
-    if 0 <= index <= upper:
+    if lower <= index <= upper:
         return index
-    return 0
+    return lower
