@@ -15,7 +15,7 @@
         <table class="table table-condensed" style="margin-bottom: 80px;">
             <tr class="table-secondary d-flex">
                 <th class="col-3">제목</th>
-                <th class="col-5">내용</th>
+                <th class="col-5">줄거리</th>
                 <th class="col-2">감독</th>
                 <th class="col-2">주연</th>
             </tr>
@@ -26,8 +26,8 @@
                         <span class="badge bg-secondary text-light">more...</span>
                     </a>
                 </td>
-                <td class="col-2">{{my_dict.director}}</td>
-                <td class="col-2">{{my_dict.casts}}</td>
+                <td style="text-align: center;" class="col-2">{{my_dict.director}}</td>
+                <td style="text-align: center;" class="col-2">{{my_dict.casts}}</td>
             </tr>
             {% for movie in movie_list %}
                 <tr class="d-flex">
@@ -38,8 +38,8 @@
                             <span class="badge bg-secondary text-light">more...</span>
                         </a>
                     </td>
-                    <td class="col-2">{{movie.director}}</td>
-                    <td class="col-2">{{movie.casts}}</td>
+                    <td style="text-align: center;" class="col-2">{{movie.director}}</td>
+                    <td style="text-align: center;" class="col-2">{{movie.casts}}</td>
                 </tr>
                 <div class="modal" id="myModal{{loop.index}}">
                     <div class="modal-dialog modal-dialog-scrollable">
