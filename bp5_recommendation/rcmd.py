@@ -43,9 +43,9 @@ def movie_res():
             flash('입력한 영화제목 데이터가 없습니다.')
             return redirect(url_for('rcmd_bp.movie'))
 
-    movie_list, title = mr.get_recommendations(index)
+    movie_list, my_dict = mr.get_recommendations(index)
     return render_template('rcmd/movie_res.html', menu=menu, weather=get_weather(),
-                            movie_list=movie_list, title=title)
+                            movie_list=movie_list, my_dict=my_dict)
 
 @rcmd_bp.route('/book', methods=['GET', 'POST'])
 def book():
